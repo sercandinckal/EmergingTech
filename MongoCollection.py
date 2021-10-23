@@ -1,6 +1,5 @@
 """
 Holds class that creates a connection to a mongoDB collection
-
 """
 import pymongo
 
@@ -12,7 +11,7 @@ class MongoCollection:
         self.collection = self.db[collection]
 
     def insert(self, new_values):
-        return self.collection.insert_many(new_values)
+        return self.collection.insert_one(new_values)
 
     def find_one(self, condition=None, columns=None):
         return self.collection.find_one(condition, columns)
@@ -21,6 +20,8 @@ class MongoCollection:
         return self.collection.find(condition, columns).limit(n)
 
     def find(self, condition=None, columns=None):
+        if condition is None:
+            condition = {}
         return self.collection.find(condition, columns)
 
     def delete_one(self, condition):
@@ -34,3 +35,6 @@ class MongoCollection:
 
     def update(self, condition, new_values):
         return self.collection.update_many(condition, new_values)
+
+    def aggregate(self, pipeline):
+        return self.collection.aggregate(pipeline)
