@@ -1,5 +1,9 @@
+from bson import ObjectId
+from datetime import datetime
 from MongoCollection import MongoCollection
 
+# connection string to mongoDB
+conn_str = "mongodb+srv://sa:COLLAB_3444@cluster0.jseia.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 class Clients:
     def __init__(self):
@@ -101,35 +105,184 @@ class Milestones:
     def add_by_json(self, details):
         self.definition = details
 
+
+
 class Projects:
     def __init__(self):
         self.definition = {}
 
-    def add_projects(self, _id=None, projectname: str = None, description: str = None, notes: str = None,
-                 Status: str = None, percentcomplete: str = None, startdate: str = None, enddate: str = None,
-                 clientid: str = None, projectmanagerid: str = None, projectteam: [] = None, milestones: [] = None):
-        if _id is None:
-            _id = {}
+    def add_projects(self, _id=None, projectname: str = "", description: str = "", notes: str = "",
+                     Status: str = "", percentcomplete: str = "", startdate: str = "", enddate: str = "",
+                     clientid: str = "", projectmanagerid: str = "", projectteam: [] = None, milestones: [] = None):
+        if _id is None: _id = ObjectId()
+        if milestones is None: milestones = []
+        if projectteam is None: projectteam = []
         self.definition = {"_id": _id, "projectname": projectname, "description": description, "notes": notes,
-                           "Status": Status,"percentcomplete": percentcomplete, "startdate": startdate,
+                           "Status": Status, "percentcomplete": percentcomplete, "startdate": startdate,
                            "enddate": enddate, "clientid": clientid, "projectmanagerid": projectmanagerid,
-                           "projectteam": projectteam,"milestones": milestones}
+                           "projectteam": projectteam, "milestones": milestones}
 
-        # add by json string from query result
-    def add_by_json(self, project_details):
-        self.definition = project_details
+    def update_projects(self, _id=None, projectname: str = None, description: str = None, notes: str = None,
+                     Status: str = None, percentcomplete: str = None, startdate: str = None, enddate: str = None,
+                     clientid: str = None, projectmanagerid: str = None, projectteam: [] = None, milestones: [] = None):
+        if _id is not None:
+            if type(_id) is str:
+                self.definition["_id"] = ObjectId(_id)
+            elif type(_id) is ObjectId:
+                self.definition["_id"] = _id
+        if projectname is not None: self.definition["projectname"] = projectname
+        if description is not None: self.definition["description"] = description
+        if notes is not None: self.definition["notes"] = notes
+        if Status is not None: self.definition["Status"] = Status
+        if percentcomplete is not None: self.definition["percentcomplete"] = percentcomplete
+        if startdate is not None: self.definition["startdate"] = startdate
+        if enddate is not None: self.definition["enddate"] = enddate
+        if clientid is not None: self.definition["clientid"] = clientid
+        if projectmanagerid is not None: self.definition["projectmanagerid"] = projectmanagerid
+        if projectteam is not None: self.definition["projectteam"] = projectteam
+        if milestones is not None: self.definition["milestones"] = milestones
 
-    def add_to_project_team(self, member: ProjectTeam): pass
+    def add_by_json(self, project_details): self.definition = project_details
 
-    def modify_project_member(self, index: int, member: ProjectTeam): pass
+    def add_to_project_team(self, member: ProjectTeam): self.definition["projectteam"].append(member)
 
-    def delete_project_member(self, index: int): pass
+    def modify_project_member(self, index: int, member: ProjectTeam): self.definition["projectteam"][index] = member
 
-    def add_to_milestone(self): pass
+    def get_project_team(self): return self.definition["projectteam"]
 
-    def modify_milestone(self, index: int, milestone: Milestones): pass
+    def add_to_milestone(self, milestone: Milestones): self.definition["milestones"].append(milestone)
 
-    def delete_milestone(self, index: int): pass
+    def modify_milestone(self, index: int, milestone: Milestones): self.definition["milestones"][index] = milestone
+
+    def get_milestones(self): return self.definition["milestones"]
+
+
+class ProjectsCollection:
+    def __init__(self, database_name: str):
+        self.myCol = MongoCollection(conn_str, database_name, "Projects")
+
+    def get_all(self, status: str = "All", late_only: bool = False):
+        condition_str = {}
+        if late_only:
+            now = datetime.now()
+            condition_str["enddate"] = {"$lt": now, "$ne": datetime.fromisoformat("1900-01-01")}
+        if status != "All":
+            condition_str["Status"] = status
+        return self.myCol.find(condition=condition_str)
+
+    def get_by_id(self, _id: str) -> {}:
+        condition_str = {"_id": ObjectId(_id)}
+        result = self.myCol.find_one(condition=condition_str)
+        return result
+
+    def get_by_prj_manager(self, user_id: str, status: str = "All", late_only: bool = False):
+        condition_str = {}
+        if late_only:
+            now = datetime.now()
+            condition_str["enddate"] = {"$lt": now, "$ne": datetime.fromisoformat("1900-01-01")}
+        if status != "All":
+            condition_str["Status"] = status
+        condition_str["projectmanagerid"] = ObjectId(user_id)
+        return self.myCol.find(condition=condition_str)
+
+    def get_by_prj_member(self, user_id: str, status: str = "All", late_only: bool = False):
+        condition_str = {}
+        if late_only:
+            now = datetime.now()
+            condition_str["enddate"] = {"$lt": now, "$ne": datetime.fromisoformat("1900-01-01")}
+        if status != "All":
+            condition_str["Status"] = status
+        condition_str["projectteam.prjteamid"] = ObjectId(user_id)
+        return self.myCol.find(condition=condition_str)
+
+    def get_by_client(self, clientid: str, status: str = "All", late_only: bool = False):
+        condition_str = {}
+        if late_only:
+            now = datetime.now()
+            condition_str["enddate"] = {"$lt": now, "$ne": datetime.fromisoformat("1900-01-01")}
+        if status != "All":
+            condition_str["Status"] = status
+        condition_str["clientid"] = ObjectId(clientid)
+        return self.myCol.find(condition=condition_str)
+
+    def get_by_milestoneid(self, milestoneid: str, status: str = "All", late_only: bool = False):
+        condition_str = {}
+        if late_only:
+            now = datetime.now()
+            condition_str["enddate"] = {"$lt": now, "$ne": datetime.fromisoformat("1900-01-01")}
+        if status != "All":
+            condition_str["Status"] = status
+        condition_str["milestones.milestoneid"] = ObjectId(milestoneid)
+        return self.myCol.find(condition=condition_str)
+
+    def delete_by_id(self, _id: str):
+        condition_str = {"_id": ObjectId(_id)}
+        result = self.myCol.delete_one(condition_str)
+        return result
+
+    def update_by_id(self, _id: str, project: Projects):
+        condition_str = {"_id": ObjectId(_id)}
+        result = self.myCol.update_one(condition_str, {"$set": project.definition})
+        return result
+
+    def insert(self, project: Projects):
+        result = self.myCol.insert(project.definition)
+        return result
+
+    def get_milestones(self, projectid: str ): pass
+
+    def get_all_prjteam(self, condition_str: {}= None):
+        # https://stackoverflow.com/questions/2350495/how-do-i-perform-the-sql-join-equivalent-in-mongodb
+        # https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/
+        # https://sqlserverguides.com/mongodb-join-two-collections/
+
+        if condition_str == None:
+            condition_str = {}
+
+        join_str = [
+            # phase 0 apply filter if needed
+            {"$match": condition_str},
+            # phase 1 breakup array
+            {"$unwind":{
+                "path": "$projectteam",
+                "includeArrayIndex":"prjtteamidx",
+                "preserveNullAndEmptyArrays": True
+            }},
+            # phase 2 connect to user table with lookup
+            {"$lookup": {
+                "from": "Users",
+                "localField": "projectteam.prjteamid",
+                "foreignField": "_id",
+                "as": "projectteam.team"
+            }},
+            # phase 3 will return 1 result, take it out of array
+            {"$unwind": {
+                "path": "$projectteam.team",
+                "preserveNullAndEmptyArrays": True
+            }},
+            # phase 4 rename columns and put in presentable format.
+            {"$project": {
+                "_id": "$projectteam.prjteamid",
+                "projectid": "$_id",
+                "prjtteamidx": 1,
+                "roles": "$projectteam.role",
+                "prjteamid": "$projectteam.prjteamid",
+                "firstname":"$projectteam.team.firstname",
+                "lastname":"$projectteam.team.lastname"
+            }}
+        ]
+        result = self.myCol.aggregate(join_str)
+        return result
+
+    def get_prjteam_by_projectid(self, projectid: str):
+        condition_str = {"_id": ObjectId(projectid)}
+        return self.get_all_prjteam(condition_str= condition_str)
+
+    def get_prjteam_by_prjteamid(self, prjteamid: str):
+        condition_str = {"projectteam.prjteamid": ObjectId(prjteamid)}
+        return self.get_all_prjteam(condition_str= condition_str)
+
+
 
 
 class ProjectsCollection:
@@ -232,6 +385,9 @@ class UsersCollection:
         condition_str["usercode"] = usercode
         condition_str["password"] = password
         result = self.myCol.find_one(condition=condition_str, columns=column_str)
+        if result is not None:
+            _id = result["_id"]
+            result["_id"] = str(_id)
         return result
 
     # for display all on page
