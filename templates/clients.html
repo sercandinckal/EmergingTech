@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+</head>
+<body>
+
+<!-- Clients table-->
+  <h2>Clients</h2>
+  {% if clients %}
+  <div class="table-wrapper">
+      <table class="fl-table">
+          <thead>
+          <tr>
+              <th>Client Name</th>
+              <th>Client Descrption</th>
+              <th>Industry</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Open Projects</th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for client in clients %}
+              <tr>
+                <td>{{client.clientname}}</td>
+                <td>{{client.description}}</td>
+                <td>{{client.industry}}</td>
+                <td>{{client.phone}}</td>
+                <td>{{client.email}}</td>
+              </tr>
+            {% endfor %}
+          <tbody>
+      </table>
+  </div>
+    {% else %}
+    <p>No Clients Found</p>
+  {% endif %}
+
+<!-- Contacts table-->
+  <h2>Contacts</h2>
+  {% if contacts %}
+  <div class="table-wrapper">
+      <table class="fl-table">
+          <thead>
+          <tr>
+              <th>Client Name</th>
+              <th>Contact Name</th>
+              <th>Role</th>
+              <th>Phone</th>
+              <th>Email</th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for contact in contacts %}
+              <tr>
+                <td>
+                  <a href="/clients/{{contact.clientid}}">{{contact.client.clientname}}</a>
+                </td>
+                <td>{{contact.firstname}} {{contact.lastname}}</td>
+                <td>{{contact.role}}</td>
+                <td>{{contact.phone}}</td>
+                <td>{{contact.email}}</td>
+              </tr>
+            {% endfor %}
+          <tbody>
+      </table>
+  </div>
+    {% else %}
+    <p>No Contacts Found</p>
+  {% endif %}
+
+<!-- Active projects table-->
+  <h2>My Active Projects</h2>
+  {% if projects %}
+  <div class="table-wrapper">
+      <table class="fl-table">
+          <thead>
+          <tr>
+              <th>Project Name</th>
+              <th>Project Descrption</th>
+              <th>Status</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Client</th>
+              <th>Project Manager</th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for project in projects %}
+              <tr>
+                <td>
+                  <a href="/projects/{{project._id}}">{{project.projectname}}</a>
+                </td>
+                <td>{{project.description}}</td>
+                <td>{{project.Status}}</td>
+                <td>{{project.startdate.strftime('%d %b %Y')}}</td>
+                <td>{{project.enddate.strftime('%d %b %Y')}}</td>
+                <td>
+                  <a href="/clients/{{project.clientid}}">{{project.client.clientname}}</a>
+                </td>
+                <td>
+                  <a href="/users/{{project.projectmanagerid}}">{{project.projectmanager.firstname}} {{project.projectmanager.lastname}}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          <tbody>
+      </table>
+  </div>
+    {% else %}
+    <p>No Active Projects</p>
+  {% endif %}
+</body>
+</html>
