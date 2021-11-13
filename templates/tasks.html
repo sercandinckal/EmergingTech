@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+</head>
+<body>
+<!-- Project tasks table-->
+  <h2>Project Tasks</h2>
+  {% if tasks %}
+  <div class="table-wrapper">
+      <table class="fl-table">
+          <thead>
+          <tr>
+              <th></th>
+              <th>Project Name</th>
+              <th>Milestone Name</th>
+              <th>Task Name</th>
+              <th>Task Description</th>
+              <th>Due Date</th>
+              <th>% Complete</th>
+              <th>Assigned To</th>
+              <th>Contact</th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+              <tr>
+                <td></td>
+                <td>
+                  <a href="/projects/{{task.projectid}}">{{task.projectname}}</a>
+                </td>
+                <td>
+                  <a href="/projects/{{task.projectid}}/{{task.milestoneid}}">{{task.milestonename}}</a>
+                </td>
+                <td>
+                  <a href="/tasks/{{task._id}}">{{task.taskname}}</a>
+                </td>
+                <td>{{task.description}}</td>
+                <td>{{task.duedate.strftime('%d %b %Y')}}</td>
+                <td>{{task.percentagecomplete}}</td>
+                <td>{{task.ownername}}</td>
+                {% if 'contact' in task %}
+                  <td>{{task.contact.firstname}} {{task.contact.lastname}}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          <tbody>
+      </table>
+  </div>
+    {% else %}
+    <p>No Project tasks found</p>
+  {% endif %}
+
+
+</body>
+</html>
