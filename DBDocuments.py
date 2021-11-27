@@ -1,24 +1,29 @@
 from bson import ObjectId
-from datetime import datetime, timedelta
-from MongoCollection import MongoCollection
 
 
 class User:
-    def __init__(self):
-        self.definition = {}
-
-    # create user from scratch (maybe for new???)
-    def add_user(self, _id=None, firstname: str = "", lastname: str = "", title: str = "", role: str = "",
-                 email: str = "", phone: str = "", notes: str = "", usercode: str = "", password: str = "",
-                 accesstype: str = ""):
-        if _id is None:
-            _id = ObjectId()
+    def __init__(self, _id=None, firstname: str = "", lastname: str = "", title: str = "", role: str = "",
+                 email: str = "", phone: str = "", notes: str = "", usercode: str = "", accesstype: str = ""):
+        if _id is not None:
+            if type(_id) is str:
+                _id = ObjectId(_id)
+            else:
+                _id = ObjectId()
+        if firstname is None: firstname = ""
+        if lastname is None: lastname = ""
+        if title is None: title = ""
+        if phone is None: phone = ""
+        if email is None: email = ""
+        if role is None: role = ""
+        if usercode is None: usercode = ""
+        if accesstype is None: accesstype = ""
+        if notes is None: notes = ""
         self.definition = {"_id": _id, "firstname": firstname, "lastname": lastname, "title": title, "role": role,
-                           "email": email, "phone": phone, "notes": notes, "usercode": usercode, "password": password,
+                           "email": email, "phone": phone, "notes": notes, "usercode": usercode,
                            "accesstype": accesstype}
 
     def update_user(self, _id=None, firstname: str = None, lastname: str = None, title: str = None, role: str = None,
-                    email: str = None, phone: str = None, notes: str = None, usercode: str = None, password: str = None,
+                    email: str = None, phone: str = None, notes: str = None, usercode: str = None,
                     accesstype: str = None):
         if _id is not None:
             if type(_id) is str:
@@ -33,23 +38,28 @@ class User:
         if phone is not None: self.definition["phone"] = phone
         if notes is not None: self.definition["notes"] = notes
         if usercode is not None: self.definition["usercode"] = usercode
-        if password is not None: self.definition["password"] = password
         if accesstype is not None: self.definition["accesstype"] = accesstype
-
-    # add by json string from query result
-    def add_by_json(self, user_details):
-        self.definition = user_details
 
 
 class Clients:
-    def __init__(self):
-        self.definition = {}
-
-    def add_client(self, _id=None, clientname: str = "", industry: str = "", description: str = "",
-                   phone: str = "", email: str = "", addr1: str = "", addr2: str = "", addr3: str = "",
-                   country: str = "", notes: str = ""):
-        if _id is None:
-            _id = ObjectId()
+    def __init__(self, _id=None, clientname: str = "", industry: str = "", description: str = "",
+                 phone: str = "", email: str = "", addr1: str = "", addr2: str = "", addr3: str = "",
+                 country: str = "", notes: str = ""):
+        if _id is not None:
+            if type(_id) is str:
+                _id = ObjectId(_id)
+            else:
+                _id = ObjectId()
+        if clientname is None: clientname = ""
+        if industry is None: industry = ""
+        if description is None: description = ""
+        if phone is None: phone = ""
+        if email is None: email = ""
+        if addr1 is None: addr1 = ""
+        if addr2 is None: addr2 = ""
+        if addr3 is None: addr3 = ""
+        if country is None: country = ""
+        if notes is None: notes = ""
         self.definition = {"_id": _id, "clientname": clientname, "industry": industry, "description": description,
                            "phone": phone, "email": email, "addr1": addr1, "addr2": addr2, "addr3": addr3,
                            "country": country, "notes": notes}
@@ -73,23 +83,28 @@ class Clients:
         if country is not None: self.definition["country"] = country
         if notes is not None: self.definition["notes"] = notes
 
-    def add_by_json(self, client_details):
-        self.definition = client_details
-
 
 class Contacts:
-    def __init__(self):
-        self.definition = {}
-
-    def add_contact(self, _id=None, firstname: str = "", lastname: str = "", title: str = "", role: str = "",
-                    email: str = "", phone: str = "", notes: str = "", clientid: str = ""):
+    def __init__(self, _id=None, firstname: str = "", lastname: str = "", title: str = "", role: str = "",
+                 email: str = "", phone: str = "", notes: str = "", clientid: ObjectId = None):
         if _id is None:
             _id = ObjectId()
+        else:
+            if type(_id) is str:
+                _id = ObjectId(_id)
+        if firstname is None: firstname = ""
+        if lastname is None: lastname = ""
+        if title is None: title = ""
+        if role is None: role = ""
+        if email is None: email = ""
+        if phone is None: phone = ""
+        if notes is None: notes = ""
+
         self.definition = {"_id": _id, "firstname": firstname, "lastname": lastname, "title": title, "role": role,
                            "email": email, "phone": phone, "notes": notes, "clientid": clientid}
 
     def update_contact(self, _id=None, firstname: str = None, lastname: str = None, title: str = None, role: str = None,
-                       email: str = None, phone: str = None, notes: str = None, clientid: str = None):
+                       email: str = None, phone: str = None, notes: str = None, clientid: ObjectId = None):
         if _id is not None:
             if type(_id) is str:
                 self.definition["_id"] = ObjectId(_id)
@@ -104,42 +119,37 @@ class Contacts:
         if notes is not None: self.definition["notes"] = notes
         if clientid is not None: self.definition["clientid"] = clientid
 
-    def add_by_json(self, contact_details):
-        self.definition = contact_details
-
 
 class ProjectTeam:
-    def __init__(self):
-        self.definition = {}
-
-        # DBA
-        # front end developer
-        # back end developer
-
-    def add_projectTeam(self, prjteamid=None, role: str = ""):
+    def __init__(self, prjteamid=None, role: str = ""):
         if prjteamid is None:
             prjteamid = ObjectId()
+        else:
+            if type(prjteamid) is str:
+                prjteamid = ObjectId(prjteamid)
+        if role is None: role = ""
         self.definition = {"prjteamid": prjteamid, "role": role}
 
-    def update_projectTeam(self, prjteamid=None, role: str = None):
+    def update_projectTeam(self, prjteamid=None, role: str = None, idx: int = None):
         if prjteamid is not None:
             if type(prjteamid) is str:
                 self.definition["prjteamid"] = ObjectId(prjteamid)
             elif type(prjteamid) is ObjectId:
                 self.definition["prjteamid"] = prjteamid
         if role is not None: self.definition["role"] = role
-
-    def add_by_json(self, details):
-        self.definition = details
+        if idx is not None: self.idx = idx
 
 
 class Milestones:
-    def __init__(self):
-        self.definition = {}
-
-    def add_milestone(self, milestoneid=None, milestonename: str = "", duedate: str = "", status: str = ""):
+    def __init__(self, milestoneid=None, milestonename: str = "", duedate: str = "", status: str = ""):
         if milestoneid is None:
             milestoneid = ObjectId()
+        else:
+            if type(milestoneid) is str:
+                milestoneid = ObjectId(milestoneid)
+        if milestonename is None: milestonename = ""
+        if duedate is None: duedate = ""
+        if status is None: status = ""
         self.definition = {"milestoneid": milestoneid, "milestonename": milestonename, "duedate": duedate,
                            "status": status}
 
@@ -153,32 +163,38 @@ class Milestones:
         if duedate is not None: self.definition["duedate"] = duedate
         if status is not None: self.definition["status"] = status
 
-    def add_by_json(self, details):
-        self.definition = details
-
 
 class Projects:
-    def __init__(self):
-        self.definition = {}
-
-    def add_projects(self, _id=None, projectname: str = "", description: str = "", notes: str = "", Status: str = "",
-                     percentcomplete: str = "", startdate: str = "", enddate: str = "", clientid: str = "",
-                     projectmanagerid: str = "", projectteam: [] = None, milestones: [] = None,
-                     projectmanager: User = None, client: Clients = None):
-        if _id is None: _id = ObjectId()
+    def __init__(self, _id=None, projectname: str = "", description: str = "", notes: str = "", Status: str = "",
+                 percentcomplete: str = "", startdate: str = "", enddate: str = "", clientid: ObjectId = None,
+                 projectmanagerid: ObjectId = None, projectteam: [] = None, milestones: [] = None):
+        if _id is None:
+            _id = ObjectId()
+        else:
+            if type(_id) is str:
+                _id = ObjectId(_id)
         if milestones is None: milestones = []
         if projectteam is None: projectteam = []
+        if projectname is None: projectname = ""
+        if description is None: description = ""
+        if notes is None: notes = ""
+        if Status is None: Status = ""
+        if percentcomplete is None: percentcomplete = ""
+        if startdate is None: startdate = ""
+        if enddate is None: enddate = ""
+
         self.definition = {"_id": _id, "projectname": projectname, "description": description, "notes": notes,
                            "Status": Status, "percentcomplete": percentcomplete, "startdate": startdate,
-                           "enddate": enddate, "clientid": clientid, "projectmanagerid": projectmanagerid,
-                           "projectteam": projectteam, "milestones": milestones, "projectmanager": projectmanager,
-                           "client": client}
+                           "enddate": enddate, "clientid": clientid, "projectmanagerid": projectmanagerid}
+        if projectteam is not None:
+            self.definition["projectteam"] = projectteam
+        if milestones is not None:
+            self.definition["milestones"] = milestones
 
     def update_projects(self, _id=None, projectname: str = None, description: str = None, notes: str = None,
                         Status: str = None, percentcomplete: str = None, startdate: str = None, enddate: str = None,
-                        clientid: str = None, projectmanagerid: str = None, projectteam: [] = None,
-                        milestones: [] = None,
-                        projectmanager: User = None, client: Clients = None):
+                        clientid: object = None, projectmanagerid: ObjectId = None, projectteam: [] = None,
+                        milestones: [] = None):
         if _id is not None:
             if type(_id) is str:
                 self.definition["_id"] = ObjectId(_id)
@@ -195,11 +211,6 @@ class Projects:
         if projectmanagerid is not None: self.definition["projectmanagerid"] = projectmanagerid
         if projectteam is not None: self.definition["projectteam"] = projectteam
         if milestones is not None: self.definition["milestones"] = milestones
-        if projectmanager is not None: self.definition["projectmanager"] = projectmanager
-        if client is not None: self.definition["client"] = client
-
-    def add_by_json(self, project_details):
-        self.definition = project_details
 
     def add_to_project_team(self, member: ProjectTeam):
         self.definition["projectteam"].append(member)
@@ -221,27 +232,35 @@ class Projects:
 
 
 class Tasks:
-    def __init__(self):
-        self.definition = {}
-
-    def add_tasks(self, _id=None, taskname: str = "", description: str = "", notes: str = "", status: str = "",
+    def __init__(self, _id=None, taskname: str = "", description: str = "", notes: str = "", status: str = "",
                   percentagecomplete: str = "", startdate: str = "", duedate: str = "", completedate: str = "",
                   contactid: ObjectId = None, ownerid: ObjectId = None, milestoneid: ObjectId = None,
-                  projectid: ObjectId = None, contact:Contacts = None, ownername:str = "", milestonename:str = "",
-                  projectname:str = ""):
+                  projectid: ObjectId = None):
         if _id is None:
             _id = ObjectId()
-        self.definition = {"_id": _id, "taskname": taskname, "description": description, "notes": notes,"status":status,
-                           "percentagecomplete": percentagecomplete, "startdate": startdate, "duedate": duedate,
-                           "completedate": completedate, "contactid": contactid, "ownerid": ownerid,
-                           "milestoneid": milestoneid, "projectid": projectid, "contact": contact,
-                           "ownername": ownername, "milestonename": milestonename, "projectname":projectname}
+        else:
+            if type(_id) is str:
+                _id = ObjectId(_id)
+        if taskname is None: taskname = ""
+        if description is None: description = ""
+        if notes is None: notes = ""
+        if status is None: status = ""
+        if percentagecomplete is None: percentagecomplete = ""
+        if startdate is None: startdate = ""
+        if duedate is None: duedate = ""
+        if completedate is None: completedate = ""
 
-    def update_tasks(self, _id=None, taskname: str = None, description: str = None, notes: str = None,status:str = None,
-                     percentagecomplete: str = None, startdate: str = None, duedate: str = None,completedate:str = None,
+        self.definition = {"_id": _id, "taskname": taskname, "description": description, "notes": notes,
+                           "status": status, "percentagecomplete": percentagecomplete, "startdate": startdate,
+                           "duedate": duedate, "completedate": completedate, "contactid": contactid, "ownerid": ownerid,
+                           "milestoneid": milestoneid, "projectid": projectid}
+
+    def update_tasks(self, _id=None, taskname: str = None, description: str = None, notes: str = None,
+                     status: str = None,
+                     percentagecomplete: str = None, startdate: str = None, duedate: str = None,
+                     completedate: str = None,
                      contactid: ObjectId = None, ownerid: ObjectId = None, milestoneid: ObjectId = None,
-                     projectid: ObjectId = None, contact:Contacts = None, ownername:str = None, milestonename:str = None,
-                     projectname:str = None):
+                     projectid: ObjectId = None):
         if _id is not None:
             if type(_id) is str:
                 self.definition["_id"] = ObjectId(_id)
@@ -259,11 +278,3 @@ class Tasks:
         if ownerid is not None: self.definition["ownerid"] = ownerid
         if milestoneid is not None: self.definition["milestoneid"] = milestoneid
         if projectid is not None: self.definition["projectid"] = projectid
-        if contact is not None: self.definition["contact"] = contact
-        if ownername is not None: self.definition["ownername"] = ownername
-        if milestonename is not None: self.definition["milestonename"] = milestonename
-        if projectname is not None: self.definition["projectname"] = projectname
-
-    # add by json string from query result
-    def add_by_json(self, tasks_details):
-        self.definition = tasks_details
