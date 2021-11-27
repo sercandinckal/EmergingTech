@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+<head>
 <title>Project: Group3</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
 body {font-size: 16px;}
@@ -307,13 +309,14 @@ body {
 
 
 </style>
+</head>
 <body class="w3-content w3-black" style="max-width:1500px;">
 
 <!-- Header with Slideshow -->
 <header class="w3-display-container w3-center">
   <button class="w3-button w3-block w3-green w3-hide-large w3-hide-medium" onclick="document.getElementById('download').style.display='block'">Download <i class="fa fa-android"></i> <i class="fa fa-apple"></i> <i class="fa fa-windows"></i></button>
   <div class="mySlides w3-animate-opacity">
-    <img class="w3-image" src="images/main/s1.jpg"" alt="Image 1" style="min-width:500px" width="1500" height="1000">
+    <img class="w3-image" src='{{url_for("static",filename="images/main/s1.jpg")}}' alt="Image 1" style="min-width:500px" width="1500" height="1000">
     <div class="w3-display-left w3-padding w3-hide-small" style="width:35%">
       <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
         <h1 class="w3-xlarge">COLLAB</h1>
@@ -325,11 +328,13 @@ body {
 		<section class="forms-section">
   <h1 class="section-title">Login</h1>
   <div class="forms">
-    <div class="form-wrapper is-active">
+    <!--
+    <div class="form-wrapper">
       <button type="button" class="switcher switcher-login">
 		Manager Login
         <span class="underline"></span>
       </button>
+
       <form class="form form-login">
         <fieldset>
           <legend>Please, enter your email and password for login.</legend>
@@ -345,21 +350,23 @@ body {
         <button type="submit" class="btn-login">Login</button>
       </form>
     </div>
-    <div class="form-wrapper">
+    -->
+
+    <div class="form-wrapper is-active">
       <button type="button" class="switcher switcher-signup">
         Employee Login
         <span class="underline"></span>
       </button>
-      <form class="form form-signup">
+      <form class="form form-signup" action="login" method="POST">
         <fieldset>
           <legend>Please, enter your email and password.</legend>
           <div class="input-block">
             <label for="signup-email">E-mail</label>
-            <input id="signup-email" type="email" required>
+            <input id="signup-email" type="email" name="email" required>
           </div>
           <div class="input-block">
             <label for="signup-password">Password</label>
-            <input id="signup-password" type="password" required>
+            <input id="signup-password" type="password" name="password" required>
           </div>
          
         </fieldset>
@@ -374,7 +381,7 @@ body {
     </div>
   </div>
   <div class="mySlides w3-animate-opacity">
-    <img class="w3-image" src="images/main/s2.png" alt="Image 2" style="min-width:500px" width="1500" height="1000">
+    <img class="w3-image" src='{{url_for("static",filename="images/main/s2.png")}}' alt="Image 2" style="min-width:500px" width="1500" height="1000">
     <div class="w3-display-left w3-padding w3-hide-small" style="width:35%">
       <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
         <h1 class="w3-xlarge w3-text-red"><b>CLICK!</b> Fast and Easy</h1>
@@ -385,7 +392,7 @@ body {
     </div>
   </div>
   <div class="mySlides w3-animate-opacity">
-    <img class="w3-image" src="images/main/s3.png" alt="Image 3" style="min-width:500px" width="1500" height="1000">
+    <img class="w3-image" src='{{url_for("static",filename="images/main/s3.png")}}' alt="Image 3" style="min-width:500px" width="1500" height="1000">
     <div class="w3-display-left w3-padding w3-hide-small" style="width:35%">
       <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
         <h1 class="w3-xlarge">COLLAB</h1> <span>Manage</span>
@@ -413,7 +420,7 @@ body {
       <p>Available for <i class="fa fa-android w3-xlarge w3-text-green"></i> <i class="fa fa-apple w3-xlarge"></i> <i class="fa fa-windows w3-xlarge w3-text-blue"></i></p>
     </div>
     <div class="w3-col l4 m6">
-      <img src="images/main/s4.png" class="w3-image w3-right w3-hide-small" width="335" height="471">
+      <img src='{{url_for("static",filename="images/main/s4.png")}}' class="w3-image w3-right w3-hide-small" width="335" height="471">
       <div class="w3-center w3-hide-large w3-hide-medium">
         <button class="w3-button w3-block w3-padding-large" onclick="document.getElementById('download').style.display='block'">
           <i class="fa fa-download"></i> Download Application
@@ -441,7 +448,7 @@ body {
 <div class="w3-padding-64 w3-light-grey">
   <div class="w3-row-padding">
     <div class="w3-col l4 m6">
-      <img class="w3-image w3-round-large w3-hide-small w3-grayscale" src="images/main/collab.gif" alt="App" width="335" height="471">
+      <img class="w3-image w3-round-large w3-hide-small w3-grayscale" src='{{url_for("static",filename="images/main/collab.gif")}}' alt="App" width="335" height="471">
     </div>
     <div class="w3-col l8 m6">
       <h1 class="w3-jumbo"><b>Time Management</b></h1>
@@ -596,7 +603,6 @@ switchers.forEach(item => {
 		this.parentElement.classList.add('is-active')
 	})
 })
-
 
 
 </script>
