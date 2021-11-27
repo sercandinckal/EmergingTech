@@ -22,11 +22,25 @@ class UsersCollection:
             result["_id"] = str(_id)
         return result
 
+    # a prelim for login functionality simply check if there is record corresponding to username / password
+    def validate_by_email(self, email: str, password: str) -> {}:
+        condition_str = {}
+        column_str = {"_id", "usercode", "firstname", "lastname", "accesstype"}
+        condition_str["email"] = {'$regex': email.strip(), '$options': 'i'}
+        condition_str["password"] = password
+        result = self.myCol.find_one(condition=condition_str, columns=column_str)
+        if result is not None:
+            _id = result["_id"]
+            result["_id"] = str(_id)
+        return result
+
     # for display all on page
-    def get_all(self):
+    def get_all(self, condition_str: {} = None):
+        if condition_str is None:
+            condition_str = {}
         column_str = {"_id", "firstname", "lastname", "title", "role", "email", "phone", "notes", "usercode",
                       "accesstype"}
-        return self.myCol.find(columns=column_str)
+        return self.myCol.find(columns=column_str,condition=condition_str)
 
     # get a record by the record id
     def get_by_id(self, _id: str) -> {}:

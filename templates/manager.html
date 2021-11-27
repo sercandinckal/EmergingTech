@@ -1,146 +1,151 @@
 <!DOCTYPE html>
 <html>
-<title>Project: Group 3</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
+<head>
+    <title>Project: Group 3</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
 
-<!--Table CSS-->
+    <!--Table CSS-->
 
-html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
- *{
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-body{
-    font-family: Helvetica;
-    -webkit-font-smoothing: antialiased;
-    background: gray;
-}
-h2{
-    text-align: center;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: black;
-    padding: 30px 0;
-}
-
-/* Table Styles */
-
-.table-wrapper{
-    margin: 10px 70px 70px;
-    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
-}
-
-.fl-table {
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: normal;
-    border: none;
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 100%;
-    white-space: nowrap;
-    background-color: white;
-}
-
-.fl-table td, .fl-table th {
-    text-align: center;
-    padding: 8px;
-}
-
-.fl-table td {
-    border-right: 1px solid #f8f8f8;
-    font-size: 12px;
-}
-
-.fl-table thead th {
-    color: #ffffff;
-    background: #4FC3A1;
-}
-
-
-.fl-table thead th:nth-child(odd) {
-    color: #ffffff;
-    background: #324960;
-}
-
-.fl-table tr:nth-child(even) {
-    background: #F8F8F8;
-}
-
-/* Responsive */
-
-@media (max-width: 767px) {
-    .fl-table {
-        display: block;
-        width: 100%;
-    }
-    .table-wrapper:before{
-        content: "Scroll horizontally >";
-        display: block;
-        text-align: right;
-        font-size: 11px;
-        color: white;
-        padding: 0 0 10px;
-    }
-    .fl-table thead, .fl-table tbody, .fl-table thead th {
-        display: block;
-    }
-    .fl-table thead th:last-child{
-        border-bottom: none;
-    }
-    .fl-table thead {
-        float: left;
-    }
-    .fl-table tbody {
-        width: auto;
-        position: relative;
-        overflow-x: auto;
-    }
-    .fl-table td, .fl-table th {
-        padding: 20px .625em .625em .625em;
-        height: 60px;
-        vertical-align: middle;
+    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+     *{
         box-sizing: border-box;
-        overflow-x: hidden;
-        overflow-y: auto;
-        width: 120px;
-        font-size: 13px;
-        text-overflow: ellipsis;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
     }
-    .fl-table thead th {
-        text-align: left;
-        border-bottom: 1px solid #f7f7f9;
+    body{
+        font-family: Helvetica;
+        -webkit-font-smoothing: antialiased;
+        background: gray;
     }
-    .fl-table tbody tr {
-        display: table-cell;
-    }
-    .fl-table tbody tr:nth-child(odd) {
-        background: none;
-    }
-    .fl-table tr:nth-child(even) {
-        background: transparent;
-    }
-    .fl-table tr td:nth-child(odd) {
-        background: #F8F8F8;
-        border-right: 1px solid #E6E4E4;
-    }
-    .fl-table tr td:nth-child(even) {
-        border-right: 1px solid #E6E4E4;
-    }
-    .fl-table tbody td {
-        display: block;
+    h2{
         text-align: center;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: black;
+        padding: 30px 0;
     }
-}
 
-</style>
+    /* Table Styles */
+
+    .table-wrapper{
+        margin: 10px 70px 70px;
+        box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+    }
+
+    .fl-table {
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: normal;
+        border: none;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%;
+        white-space: nowrap;
+        background-color: white;
+    }
+
+    .fl-table td, .fl-table th {
+        text-align: center;
+        padding: 8px;
+    }
+
+    .fl-table td {
+        border-right: 1px solid #f8f8f8;
+        font-size: 12px;
+    }
+
+    .fl-table thead th {
+        color: #ffffff;
+        background: #4FC3A1;
+    }
+
+
+    .fl-table thead th:nth-child(odd) {
+        color: #ffffff;
+        background: #324960;
+    }
+
+    .fl-table tr:nth-child(even) {
+        background: #F8F8F8;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 767px) {
+        .fl-table {
+            display: block;
+            width: 100%;
+        }
+        .table-wrapper:before{
+            content: "Scroll horizontally >";
+            display: block;
+            text-align: right;
+            font-size: 11px;
+            color: white;
+            padding: 0 0 10px;
+        }
+        .fl-table thead, .fl-table tbody, .fl-table thead th {
+            display: block;
+        }
+        .fl-table thead th:last-child{
+            border-bottom: none;
+        }
+        .fl-table thead {
+            float: left;
+        }
+        .fl-table tbody {
+            width: auto;
+            position: relative;
+            overflow-x: auto;
+        }
+        .fl-table td, .fl-table th {
+            padding: 20px .625em .625em .625em;
+            height: 60px;
+            vertical-align: middle;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: 120px;
+            font-size: 13px;
+            text-overflow: ellipsis;
+        }
+        .fl-table thead th {
+            text-align: left;
+            border-bottom: 1px solid #f7f7f9;
+        }
+        .fl-table tbody tr {
+            display: table-cell;
+        }
+        .fl-table tbody tr:nth-child(odd) {
+            background: none;
+        }
+        .fl-table tr:nth-child(even) {
+            background: transparent;
+        }
+        .fl-table tr td:nth-child(odd) {
+            background: #F8F8F8;
+            border-right: 1px solid #E6E4E4;
+        }
+        .fl-table tr td:nth-child(even) {
+            border-right: 1px solid #E6E4E4;
+        }
+        .fl-table tbody td {
+            display: block;
+            text-align: center;
+        }
+    }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+</head>
 <body class="w3-light-grey">
 
 <!-- Top container -->
@@ -166,17 +171,17 @@ h2{
   </div>
   <hr>
   <div class="w3-container">
-    <h5>Dashboard</h5>
   </div>
   <div class="w3-bar-block">
-    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Main Page</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Employees</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <a href="/dashboard" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-home fa-fw"></i>  Dashboard</a>
+    <a href="/projects" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Projects</a>
+    <a href="/tasks" class="w3-bar-item w3-button w3-padding"><i class="fa fa-tasks fa-fw"></i>  Tasks</a>
+    <a href="/clients" class="w3-bar-item w3-button w3-padding"><i class="fa fa-address-card fa-fw"></i> Clients </a>
+    <a href="/employees" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Employees</a><br><br>
+	<a href="/logout" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw"></i>  Logout</a><br><br>
   </div>
 </nav>
-
 
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
@@ -249,13 +254,13 @@ h2{
 {% if isprojmgr %}
   <!-- Active projects table-->
   <h2>Active Projects</h2>
-  {% if projects %}
   <div class="table-wrapper">
-      <table class="fl-table">
+      <table class="fl-table" id="projectsTable">
           <thead>
           <tr>
+              <th>id</th>
               <th>Project Name</th>
-              <th>Project Descrption</th>
+              <th>Project Description</th>
               <th>Status</th>
               <th>Start Date</th>
               <th>End Date</th>
@@ -263,63 +268,17 @@ h2{
               <th>Project Manager</th>
           </tr>
           </thead>
-          <tbody>
-            {% for project in projects %}
-              <tr>
-                <td>
-                  <a href="/projects/{{project._id}}">{{project.projectname}}</a>
-                </td>
-                <td>{{project.description}}</td>
-                <td>{{project.Status}}</td>
-                <td>{{project.startdate.strftime('%d %b %Y')}}</td>
-                <td>{{project.enddate.strftime('%d %b %Y')}}</td>
-                <td>
-                  <a href="/clients/{{project.clientid}}">{{project.client.clientname}}</a>
-                </td>
-                <td>
-                  <a href="/users/{{project.projectmanagerid}}">{{project.projectmanager.firstname}} {{project.projectmanager.lastname}}</a>
-                </td>
-
-              </tr>
-            {% endfor %}
-          <!--
-          <tr>
-              <td>Webpages</td>
-              <td>To create webpages</td>
-              <td>Partially completed</td>
-              <td>20 September 2021</td>
-              <td>17 December</td>
-          </tr>
-          <tr>
-              <td>Python Projects</td>
-              <td>To develop codes</td>
-              <td>Initial Stage</td>
-              <td>29 Sepetember 2021</td>
-              <td>17 December 2021</td>
-          </tr>
-          <tr>
-              <td>Database Connections</td>
-              <td>To connect DB to servers</td>
-              <td>Planning stage</td>
-              <td>04 October 2021</td>
-              <td>17 December 2021</td>
-          </tr>
-          -->
-          <tbody>
       </table>
   </div>
-    {% else %}
-    <p>No Active Projects</p>
-  {% endif %}
-{% endif %}
+ {% endif %}
 
 <!--My Tasks-->
 <h2>My Active Tasks</h2>
-{% if tasks %}
 <div class="table-wrapper">
-    <table class="fl-table">
+    <table class="fl-table" id="tasksTable">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Project Name</th>
             <th>Task Name</th>
             <th>Task Descrption</th>
@@ -329,28 +288,8 @@ h2{
             <th>Task Owner</th>
         </tr>
         </thead>
-        <tbody>
-          {% for task in tasks %}
-            <tr>
-              <td>
-                <a href="/projects/{{task.projectid}}">{{task.projectname}}</a>
-              </td>
-              <td>{{task.taskname}}</td>
-              <td>{{task.description}}</td>
-              <td>{{task.status}}</td>
-              <td>{{task.duedate.strftime('%d %b %Y')}}</td>
-              <td>{{task.percentagecomplete}}</td>
-              <td>
-                <a href="/users/{{task.ownerid}}">{{task.ownername}}</a>
-              </td>
-            </tr>
-          {% endfor %}
-        <tbody>
     </table>
 </div>
-  {% else %}
-  <p>No Active Tasks</p>
-{% endif %}
 
 
   <div class="w3-panel">
@@ -405,7 +344,7 @@ h2{
       <div class="w3-container w3-center w3-padding w3-green" style="width:25%">+25%</div>
     </div>
 
-
+    
     <p>Bounce Rate</p>
     <div class="w3-grey">
       <div class="w3-container w3-center w3-padding w3-red" style="width:75%">75%</div>
@@ -489,6 +428,8 @@ h2{
 </div>
 
 <script>
+"use strict";
+
 // Get the Sidebar
 var mySidebar = document.getElementById("mySidebar");
 
@@ -511,6 +452,105 @@ function w3_close() {
   mySidebar.style.display = "none";
   overlayBg.style.display = "none";
 }
+//Loads projects table
+function loadProjectsTable(){
+	$.ajax({
+		"url": "/getprojects",
+		"type": "POST",
+		"success": function(data){
+			$('#projectsTable').DataTable({
+				data,
+				"columnDefs": [],
+				columns: [
+					{ data: "_id",
+						"visible": false,
+						"searchable": false },
+					{ data: "_id",
+						"render": function ( data, type, row, meta ) {
+							return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+					}},
+					{ data: "description" },
+					{ data: "Status" },
+					{ data: "startdate" },
+					{ data: "enddate" },
+					{ data: "clientid",
+						"render": function ( data, type, row, meta ) {
+							//alert(JSON.stringify(row));
+							return '<a href="/clients?clientid='+data+'">'+row['clientname']+'</a>';
+					}},
+					{ data: "projectmanagerid",
+						"render": function ( data, type, row, meta ) {
+							if(data == null){
+								return 'None';
+							}else{
+								return '<a href="/employees?userid='+data+'">'+row['projectmanager']['firstname']+' '+row['projectmanager']['lastname']+'</a>';
+							}
+						}
+					}
+				]
+			});
+		},
+		"error": function(XMLHttpRequest, textStatus, errorThrown) {
+			var dt = $('#projectsTable').DataTable({data:[]});
+			dt.column(0).visible(false);
+		}
+	});
+}
+
+//Loads task table
+function loadTasksTable(){
+	$.ajax({
+		"url": "/gettasks",
+		"type": "POST",
+		"success": function(data){
+			var dt =$('#tasksTable').DataTable({
+				data,
+				"columnDefs": [],
+				columns: [
+					{ data: "_id",
+						"visible": false,
+						"searchable": false },
+					{ data: "projectid",
+						"render": function ( data, type, row, meta ) {
+							return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+					}},
+					{ data: "taskname" },
+					{ data: "description" },
+					{ data: "duedate" },
+					{ data: "percentagecomplete" },
+					{ data: "ownerid",
+						"render": function ( data, type, row, meta ) {
+							if(data == null){
+								return 'None';
+							}else{
+								return '<a href="/employees?userid='+data+'">'+row['ownername']+'</a>';
+							}
+						}
+					},
+					{ data: "contactid",
+						"render": function ( data, type, row, meta ) {
+							if(data == null){
+								return 'None';
+							}else{
+								return '<a href="/clients?contactid='+data+'">'+row['contact']['firstname']+' '+ row['contact']['lastname']+'</a>';
+							}
+						}
+					}
+				]
+			});
+		},
+		"error": function(XMLHttpRequest, textStatus, errorThrown) {
+			var dt = $('#tasksTable').DataTable({data:[]});
+			dt.column(0).visible(false);
+		}
+	});
+}
+
+$(document).ready(function(){
+	loadProjectsTable();
+	loadTasksTable();
+});
+
 </script>
 
 </body>
