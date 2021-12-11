@@ -145,20 +145,80 @@
 			}
 		}
 
-		/* Form Style*/
+		/* The popup form - hidden by default */
+		.form-popup {
+		  display: none;
+		  position: center;
+		  bottom: 0;
+		  right: 20px;
+		  border: 7px solid #f1f1f1;
+		  z-index: 9;
+		}
+
+		/* Add styles to the form container */
+		.form-container {
+		  max-width: 600px;
+		  padding: 10px;
+		  background-color: white;
+		}
+
 		.form_element{
-			display: inline-block;
-			margin:1px;
+		  display: inline-block;
+		  margin:1px;
+		  margin-right:10px;
+		  width:230px;
 		}
-		label.form_element {
-			float: left;
-			width: 120px;
-			text-align: right;
+
+		/* Full-width input fields */
+		.form-container input[type=text], 
+		.form-container input[type=email],
+		.form-container input[type=tel],
+		.form-container input[type=date],
+		.form-container input[type=number],
+		.form-container input[type=password],
+		.form-container select, 
+		.form-container textarea{
+		  width: 100%;
+		  padding: 15px;
+		  margin: 8px 0 22px 0;
+		  border: none;
+		  background: #f1f1f1;
 		}
-		input.form_element{
-			margin-left: 16px;
-			margin-bottom: 5px;
+
+		/* When the inputs get focus, do something */
+		.form-container input[type=text]:focus, 
+		.form-container input[type=email]:focus, 
+		.form-container input[type=tel]:focus, 
+		.form-container input[type=date]:focus, 
+		.form-container input[type=number]:focus, 
+		.form-container input[type=password]:focus, 
+		.form-container select:focus, 
+		.form-container textarea:focus {
+		  background-color: #ddd;
+		  outline: none;
 		}
+
+		/* Set a style for the submit/login button */
+		.form-container .btn {
+		  background-color: #04AA6D;
+		  color: white;
+		  padding: 15px 20px;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  margin-bottom:10px;
+		  opacity: 0.8;
+		}
+
+		/* Add a red background color to the cancel button */
+		.form-container .cancel {
+		  background-color: red;
+		}
+
+		/* Add some hover effects to buttons */
+		.form-container .btn:hover, .open-button:hover {
+		  opacity: 1;
+		
 	</style>
 </head>
 <body class="w3-light-grey">
@@ -275,79 +335,79 @@
           </thead>
       </table>
       <!-- user form-->
-      <div>
-        <form name="userForm" >
-            <div>
-                <input type="hidden" id="userid" name="userid" disabled>
-            </div>
-            <br>
-            <fieldset>
-                <legend>Login Information</legend>
-                <div class="form_element">
-                    <label for="user_name" class="form_element">User Name:</label>
-                    <input type="text" id="user_name" name="usercode" class="form_element" disabled>
-                </div>
-                <div class="form_element">
-                    <label for="user_email" class="form_element">Email:</label>
-                    <input type="email" id="user_email" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b"  class="form_element" disabled>
-                </div>
-                <br>
+    <div class="form-popup" id="userFormContainer">
+	  <form class="form-container" id="userForm">
+		<fieldset>
+			<legend>Login Information</legend>
+			<input type="hidden" id="userid" name="userid" disabled>
+			<div class="form_element">
+				<label for="usercode"><b>Username</b></label>
+				<div id="usercode"></div>
+			</div>
+			
+			<div class="form_element">
+				<label for="email"><b>Email</b></label>
+				<div id='email'></div>
+			</div>
+			
+			<div class="form_element">
+				<label for="accesstype"><b>Access Level</b></label>	
+				<select name="accesstype" id="accesstype">
+				  <option value="None" selected="selected">None</option>
+				  <option value="Employee">Employee</option>
+				  <option value="Proj Manager">Project Manager</option>
+				</select>
+			</div>
+			
+			<div class="form_element" id="pswdContainer">
+				<label for="password"><b>Password</b></label>
+				<div id="password"></div>
+			</div>
+		</fieldset>
 
-                <div class="form_element">
-                    <label for="user_accesslevel" class="form_element">Access Level:</label>
-                    <input type="text" id="user_accesslevel" name="accesslevel" class="form_element" disabled>
-                </div>
-                <div class="form_element">
-                    <label class="form_element">&nbsp;</label>
-                    <input type="button" id="btn_resetpassword" name="btn_resetpassword" class="form_element" value="Reset Password" disabled>
-                </div>
-            </fieldset>
+		<fieldset>
+			<legend>User Details</legend>
+			<div class="form_element">
+				<label for="firstname"><b>First Name</b></label>
+				<input type="text" placeholder="First name" id='firstname' name="firstname" required>
+			</div>
+			
+			<div class="form_element">
+				<label for="name"><b>Last Name</b></label>
+				<input type="text" placeholder="Last name" id='lastname' name="lastname" required>
+			</div>
+			
+			<div class="form_element">
+				<label for="name"><b>Role</b></label>
+				<input type="text" placeholder="Role" id='role' name="role">
+			</div>
+			
+			<div class="form_element">
+				<label for="name"><b>Phone Number</b></label>
+				<input type="tel" placeholder="555-555-5555" id='phone' name="phone"pattern="\d{3}[\-]\d[3][\-]\d{4}">
+			</div>
+			
+			<div class="form_element">
+				<label for="notes"><b>User Notes</b></label>
+				<textarea id="notes" name="notes" value='' rows="4" cols="30"></textarea>
+			</div>
+		</fieldset>
 
-            <fieldset>
-                <legend>User Details</legend>
-
-                <div class="form_element">
-                    <label for="user_firstname" class="form_element">First Name:</label>
-                    <input type="text" id="user_firstname" name="firstname" class="form_element" disabled>
-                </div>
-                <div class="form_element">
-                    <label for="user_lastname" class="form_element">Last Name:</label>
-                    <input type="text" id="user_lastname" name="lastname" class="form_element" disabled>
-                </div>
-                <br>
-
-                <div class="form_element">
-                    <label for="user_title" class="form_element">Title:</label>
-                    <input type="text" id="user_title" name="title" class="form_element" disabled>
-                </div><div class="form_element">
-                    <label for="user_role" class="form_element">Role:</label>
-                    <input type="text" id="user_role" name="role" class="form_element" disabled>
-                </div>
-                <br>
-
-                <div class="form_element">
-                    <label for="user_phone" class="form_element">Phone Number:</label>
-                    <input type="tel" id="user_phone" name="phone" pattern="\d{3}[\-]\d[3][\-]\d{4}" class="form_element" disabled>
-                </div>
-                <br>
-
-                <div class="form_element">
-                    <label for="user_notes" class="form_element">User Notes:</label>
-                    <input type="text" id="user_notes" name="notes" class="form_element" disabled>
-                </div><div>
-                    <label>&nbsp;</label>
-                </div>
-                <br>
-            </fieldset>
-        </form>
-        </div>
+		<fieldset>
+			<div class="form_element">
+				<button type="submit" class="btn"id='user_submitbtn'>Submit</button>
+			</div>
+			<div class="form_element">
+				<input type="button" class="btn cancel" id='user_cancelbtn' value="Close">
+			</div>
+		</fieldset>
+	  </form>
+	</div>
   </div>
 
 
 
-
  <!-- Projects table-->
-
   <h2>Projects</h2>
   <div class="table-wrapper" >
       <table class="fl-table" id="projectsTable">
@@ -459,6 +519,8 @@
 <script>
 "use strict";
 var usersTable;
+var projectsTable;
+var tasksTable;
 
 // Get the Sidebar
 var mySidebar = document.getElementById("mySidebar");
@@ -485,145 +547,222 @@ function w3_close() {
 
 //Loads user table
 function loadUsersTable(){
-	$.ajax({
-		"url": "/getusers",
-		"type": "POST",
-		"success": function(data){
-			usersTable = $('#usersTable').DataTable({
-				data,
-				"columnDefs": [],
-				columns: [
-					{ data: "_id",
-						"visible": false,
-						"searchable": false },
-					{ data: "usercode" },
-					{ data: "email" },
-					{ data: "accesstype" },
-					{ data: "_id",
-						"render": function ( data, type, row, meta ) {
-							//alert(JSON.stringify(row));
-							return row['firstname']+' '+row['lastname'];
-					}},
-					{ data: "role" },
-					{ data: "phone" },
-                    {
-                        data: null,
-                        className: "dt-center editor-edit",
-                        defaultContent: '<i class="fa fa-pencil"/>',
-                        orderable: false
-                    },
-                    {
-                        data: null,
-                        className: "dt-center editor-delete",
-                        defaultContent: '<i class="fa fa-trash"/>',
-                        orderable: false
-                    }
-				]
-			});
+	usersTable=$('#usersTable').DataTable({
+		ajax:  {
+			"url": "/getusers",
+			"type": "POST",
+			"data": {},
+			"dataSrc":""
 		},
-		"error": function(XMLHttpRequest, textStatus, errorThrown) {
-			usersTable = $('#usersTable').DataTable({data:[]});
-			usersTable.column(0).visible(false);
-		}
+		columns: [
+			{ data: "_id",
+				"visible": false,
+				"searchable": false },
+			{ data: "usercode" },
+			{ data: "email" },
+			{ data: "accesstype" },
+			{ data: "_id",
+				"render": function ( data, type, row, meta ) {
+					return row['firstname']+' '+row['lastname'];
+			}},
+			{ data: "role" },
+			{ data: "phone" },
+			{ data: null,
+				className: "dt-center editor-edit",
+				defaultContent: '<i class="fa fa-pencil"/>',
+				orderable: false
+			},
+			{ data: null,
+				className: "dt-center editor-reset",
+				defaultContent: '<i class="fa fa-key"/>',
+				orderable: false
+			}
+		]
 	});
+
+}
+
+//refresh userdata
+function refreshUsersTable(){
+	$('#usersTable').DataTable().ajax.reload();
 }
 
 //Loads projects table
 function loadProjectsTable(){
-	$.ajax({
-		"url": "/getprojects",
-		"type": "POST",
-		"success": function(data){
-			$('#projectsTable').DataTable({
-				data,
-				"columnDefs": [],
-				columns: [
-					{ data: "_id",
-						"visible": false,
-						"searchable": false },
-					{ data: "_id",
-						"render": function ( data, type, row, meta ) {
-							return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
-					}},
-					{ data: "description" },
-					{ data: "Status" },
-					{ data: "startdate" },
-					{ data: "enddate" },
-					{ data: "clientid",
-						"render": function ( data, type, row, meta ) {
-							//alert(JSON.stringify(row));
-							return '<a href="/clients?clientid='+data+'">'+row['clientname']+'</a>';
-					}},
-					{ data: "projectmanagerid",
-						"render": function ( data, type, row, meta ) {
-							if(data == null){
-								return 'None';
-							}else{
-								return '<a href="/employees?userid='+data+'">'+row['projectmanager']['firstname']+' '+row['projectmanager']['lastname']+'</a>';
-							}
-						}
-					}
-				]
-			});
+	projectsTable = $('#projectsTable').DataTable({
+		ajax:  {
+			"url": "/getprojects",
+			"type": "POST",
+			"data": {},
+			"dataSrc":""
 		},
-		"error": function(XMLHttpRequest, textStatus, errorThrown) {
-			var dt = $('#projectsTable').DataTable({data:[]});
-			dt.column(0).visible(false);
-		}
+		columns: [
+			{ data: "_id",
+				"visible": false,
+				"searchable": false },
+			{ data: "_id",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+			}},
+			{ data: "description" },
+			{ data: "Status" },
+			{ data: "startdate" },
+			{ data: "enddate" },
+			{ data: "clientid",
+				"render": function ( data, type, row, meta ) {
+					//alert(JSON.stringify(row));
+					return '<a href="/clients?clientid='+data+'">'+row['clientname']+'</a>';
+			}},
+			{ data: "projectmanagerid",
+				"render": function ( data, type, row, meta ) {
+					if(data == null){
+						return 'None';
+					}else{
+						return '<a href="/employees?userid='+data+'">'+row['projectmanager']['firstname']+' '+row['projectmanager']['lastname']+'</a>';
+					}
+				}
+			}
+		]
 	});
 }
 
 //Loads task table
 function loadTasksTable(){
+	tasksTable =$('#tasksTable').DataTable({
+		ajax:  {
+			"url": "/gettasks",
+			"type": "POST",
+			"data": {},
+			"dataSrc":""
+		},
+		columns: [
+			{ data: "_id",
+				"visible": false,
+				"searchable": false },
+			{ data: "projectid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+			}},
+			{ data: "milestoneid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?milestoneid='+data+'">'+row['milestonename']+'</a>';
+			}},
+			{ data: "taskname" },
+			{ data: "description" },
+			{ data: "duedate" },
+			{ data: "percentagecomplete" },
+			{ data: "ownerid",
+				"render": function ( data, type, row, meta ) {
+					if(row['ownername'] == null){
+						return 'None';
+					}else{
+						return '<a href="/employees?userid='+data+'">'+row['ownername']+'</a>';
+					}
+				}
+			},
+			{ data: "contactid",
+				"render": function ( data, type, row, meta ) {
+					if(data == null){
+						return 'None';
+					}else{
+						return '<a href="/clients?contactid='+data+'">'+row['contact']['firstname']+' '+ row['contact']['lastname']+'</a>';
+					}
+				}
+			}
+		]
+	});
+}
+
+//Close User Form
+function closeUserForm(){
+	var usercode_div = $('<div/>',{
+		text : "",
+		id : $("#usercode").attr('id')
+	});
+	var email_div = $('<div/>',{
+		text : "",
+		id : $("#email").attr('id')
+	});
+	var password_div = $('<div/>',{
+		text : "",
+		id : $("#password").attr('id')
+	});
+	
+	$("#userForm").trigger("reset");
+	$("#userid").removeAttr("value");
+	$("#usercode").replaceWith(usercode_div);
+	$("#email").replaceWith(email_div);
+	$("#password").replaceWith(password_div);
+	$("#userFormContainer").css("display","None");
+	$(window).scrollTop($("#createUser").offset().top);
+}
+
+function submitUser(){
+	var userid = $("#userid").val();
+	var url, usercode, email, password;
+	
+	var accesstype = $("#accesstype").val();
+	var firstname = $("#firstname").val();
+	var lastname = $("#lastname").val();
+	var role = $("#role").val();
+	var phone = $("#phone").val();
+	var notes = $("#notes").val();
+	
+	if (userid != ""){
+		url = "/updateuser";
+	}else{
+		url = "/createuser";
+		usercode = $("#usercode").val();
+		email = $("#email").val();
+		password = $("#password").val().replace(/\n$/, "");
+	}
+	
+	var data = {
+		"userid": userid,
+		"usercode": usercode,
+		"email": email,
+		"accesstype": accesstype,
+		"password": password,
+		"firstname": firstname,
+		"lastname": lastname,
+		"role": role,
+		"phone": phone,
+		"notes": notes
+	};
 	$.ajax({
-		"url": "/gettasks",
+		"url": url,
+		"data": data,
 		"type": "POST",
 		"success": function(data){
-			var dt =$('#tasksTable').DataTable({
-				data,
-				"columnDefs": [],
-				columns: [
-					{ data: "_id",
-						"visible": false,
-						"searchable": false },
-					{ data: "projectid",
-						"render": function ( data, type, row, meta ) {
-							return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
-					}},
-					{ data: "milestoneid",
-						"render": function ( data, type, row, meta ) {
-							return '<a href="/projects?milestoneid='+data+'">'+row['milestonename']+'</a>';
-					}},
-					{ data: "taskname" },
-					{ data: "description" },
-					{ data: "duedate" },
-					{ data: "percentagecomplete" },
-					{ data: "ownerid",
-						"render": function ( data, type, row, meta ) {
-							if(data == null){
-								return 'None';
-							}else{
-								return '<a href="/employees?userid='+data+'">'+row['ownername']+'</a>';
-							}
-						}
-					},
-					{ data: "contactid",
-						"render": function ( data, type, row, meta ) {
-							if(data == null){
-								return 'None';
-							}else{
-								return '<a href="/clients?contactid='+data+'">'+row['contact']['firstname']+' '+ row['contact']['lastname']+'</a>';
-							}
-						}
-					}
-				]
-			});
+			closeUserForm();
+			alert("success");
+			refreshUsersTable();
 		},
 		"error": function(XMLHttpRequest, textStatus, errorThrown) {
-			var dt = $('#tasksTable').DataTable({data:[]});
-			dt.column(0).visible(false);
+			var err = JSON.parse(XMLHttpRequest.responseText);
+			alert(err.Message);
 		}
 	});
+}
+
+function resetPassword(userid){
+	var password = prompt("Please enter new password:");
+	if (password == null || $.trim(password) == "") {
+	} else {
+		$.ajax({
+			"url": "/updatepassword",
+			"data": {"userid":userid, "password":password},
+			"type": "POST",
+			"success": function(data){
+				closeUserForm();
+				alert("Reset successful");
+			},
+			"error": function(XMLHttpRequest, textStatus, errorThrown) {
+				var err = JSON.parse(XMLHttpRequest.responseText);
+				alert(err.Message);
+			}
+		});
+	}
 }
 
 $(document).ready(function(){
@@ -631,24 +770,106 @@ $(document).ready(function(){
 	loadProjectsTable();
 	loadTasksTable();
 
-    // New record
+    // New User record
     $('#createUser').on('click', function (e) {
+		closeUserForm();
+		var usercode_input = $('<input/>',{
+			type : "text", 
+			placeholder : "username", 
+			id : "usercode",
+			name :"usercode", 
+			required : true
+		});
+		var email_input = $('<input/>',{
+			type : "email", 
+			placeholder : "email", 
+			id : "email",
+			name :"email", 
+			pattern : "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}",
+			required : true
+		});
+		var password_input = $('<input/>',{
+			type : "password", 
+			placeholder : "******", 
+			id : "password",
+			name :"password", 
+			required : true
+		});
+		
+		$("#usercode").replaceWith(usercode_input);
+		$("#email").replaceWith(email_input);
+		$("#password").replaceWith(password_input);
+		
+        $("#userFormContainer").css("display","block");
+		$("#usercode").focus();
+		
         e.preventDefault();
-        alert('Create new record');
     });
 
-    // Edit  record
+    // Edit User record
     $('#usersTable').on('click', 'td.editor-edit', function (e) {
+		
+		closeUserForm();
+		var row  = usersTable.row(this).data()
+		
+		$("#userid").val(row._id);
+		$("#accesstype").val(row.accesstype);
+		$("#firstname").val(row.firstname);
+		$("#lastname").val(row.lastname);
+		$("#role").val(row.role);
+		$("#phone").val(row.phone);
+		$("#notes").val(row.notes);
+		var usercode_div = $('<div/>',{
+			text : row.usercode,
+			id : $("#usercode").attr('id')
+		});
+		var email_div = $('<div/>',{
+			text : row.email,
+			id : $("#email").attr('id')
+		});
+		var password_input = $('<input/>',{
+			type : "button",
+			class: "btn",
+			value : "Reset Password", 
+			id : "password",
+			onclick:"resetPassword('"+row._id+"');"
+		});
+		$("#usercode").replaceWith(usercode_div);
+		$("#email").replaceWith(email_div);
+		$("#password").replaceWith(password_input);
+		
+		
+        $("#userFormContainer").css("display","block");
+		$("#firstname").focus();
+		
         e.preventDefault();
-        alert('Edit record');
     });
+	
+	/*
+	$('#example tbody').on('click', 'tr', function () {
+        var data = table.row( this ).data();
+        alert( 'You clicked on '+data[0]+'\'s row' );
+    } );
+	*/
 
-    // Delete record
-    $('#usersTable').on('click', 'td.editor-delete', function (e) {
+    // Reset User password
+    $('#usersTable').on('click', 'td.editor-reset', function (e) {
+		var row  = usersTable.row(this).data()
+		resetPassword(row._id);
+		e.preventDefault();
+    });
+	
+	// Cancel User button
+    $('#user_cancelbtn').on('click', function (e) {
         e.preventDefault();
-        alert('Delete record');
+		closeUserForm();
     });
-
+	
+	// SubmitUser button
+    $('#userForm').on('submit', function (e) {
+        e.preventDefault();
+		submitUser();
+    });
 });
 </script>
 

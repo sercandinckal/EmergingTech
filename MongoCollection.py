@@ -5,13 +5,17 @@ import pymongo
 
 
 class MongoCollection:
-    def __init__(self, conn_str: str, database_name: str, collection: str):
+
+    def __init__(self, database_name: str, collection: str):
+        # connection string to mongoDB
+        conn_str = "mongodb+srv://sa:COLLAB_3444@cluster0.jseia.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
         self.client = pymongo.MongoClient(conn_str)
         self.db = self.client[database_name]
         self.collection = self.db[collection]
 
     def insert(self, new_values):
-        return self.collection.insert_one(new_values)
+        result = self.collection.insert_one(new_values)
+        return result
 
     def find_one(self, condition=None, columns=None):
         return self.collection.find_one(condition, columns)

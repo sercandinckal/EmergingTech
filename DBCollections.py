@@ -1,3 +1,10 @@
+'''
+The backbone of the various DB collection connector.
+Creates a single global variable that can keep connecting
+to the relevant collection without the need to constantly reconnecting
+slowing down the process
+
+'''
 from DB_Clients import *
 from DB_Projects import *
 from DB_Tasks import *
