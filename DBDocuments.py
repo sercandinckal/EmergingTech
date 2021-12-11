@@ -1,9 +1,13 @@
+'''
+Python class representation of the database objects
+'''
+from datetime import datetime
 from bson import ObjectId
 
 
 class User:
     def __init__(self, _id=None, firstname: str = "", lastname: str = "", title: str = "", role: str = "",
-                 email: str = "", phone: str = "", notes: str = "", usercode: str = "", accesstype: str = ""):
+                 email: str = "", phone: str = "", notes: str = "", usercode: str = "", accesstype: str = "None"):
         if _id is not None:
             if type(_id) is str:
                 _id = ObjectId(_id)
@@ -16,7 +20,7 @@ class User:
         if email is None: email = ""
         if role is None: role = ""
         if usercode is None: usercode = ""
-        if accesstype is None: accesstype = ""
+        if accesstype is None: accesstype = "None"
         if notes is None: notes = ""
         self.definition = {"_id": _id, "firstname": firstname, "lastname": lastname, "title": title, "role": role,
                            "email": email, "phone": phone, "notes": notes, "usercode": usercode,
@@ -130,30 +134,31 @@ class ProjectTeam:
         if role is None: role = ""
         self.definition = {"prjteamid": prjteamid, "role": role}
 
-    def update_projectTeam(self, prjteamid=None, role: str = None, idx: int = None):
+    def update_projectTeam(self, prjteamid=None, role: str = None):
         if prjteamid is not None:
             if type(prjteamid) is str:
                 self.definition["prjteamid"] = ObjectId(prjteamid)
             elif type(prjteamid) is ObjectId:
                 self.definition["prjteamid"] = prjteamid
         if role is not None: self.definition["role"] = role
-        if idx is not None: self.idx = idx
 
 
 class Milestones:
-    def __init__(self, milestoneid=None, milestonename: str = "", duedate: str = "", status: str = ""):
+    def __init__(self, milestoneid=None, milestonename: str = "", duedate: datetime = datetime(1900,1,1),
+                 status: str = "Active"):
         if milestoneid is None:
             milestoneid = ObjectId()
         else:
             if type(milestoneid) is str:
                 milestoneid = ObjectId(milestoneid)
         if milestonename is None: milestonename = ""
-        if duedate is None: duedate = ""
-        if status is None: status = ""
+        if duedate is None: duedate = datetime(1900,1,1)
+        if status is None: status = "Active"
         self.definition = {"milestoneid": milestoneid, "milestonename": milestonename, "duedate": duedate,
                            "status": status}
 
-    def update_milestone(self, milestoneid=None, milestonename: str = None, duedate: str = None, status: str = None):
+    def update_milestone(self, milestoneid=None, milestonename: str = None, duedate: datetime = None,
+                         status: str = None):
         if milestoneid is not None:
             if type(milestoneid) is str:
                 self.definition["milestoneid"] = ObjectId(milestoneid)
@@ -165,23 +170,22 @@ class Milestones:
 
 
 class Projects:
-    def __init__(self, _id=None, projectname: str = "", description: str = "", notes: str = "", Status: str = "",
-                 percentcomplete: str = "", startdate: str = "", enddate: str = "", clientid: ObjectId = None,
-                 projectmanagerid: ObjectId = None, projectteam: [] = None, milestones: [] = None):
+    def __init__(self, _id=None, projectname: str = "", description: str = "", notes: str = "", Status: str = "New",
+                 percentcomplete: float = 0.0, startdate: datetime = datetime(1900,1,1),
+                 enddate: datetime = datetime(1900,1,1), clientid: ObjectId = None, projectmanagerid: ObjectId = None,
+                 projectteam: [] = None, milestones: [] = None):
         if _id is None:
             _id = ObjectId()
         else:
             if type(_id) is str:
                 _id = ObjectId(_id)
-        if milestones is None: milestones = []
-        if projectteam is None: projectteam = []
         if projectname is None: projectname = ""
         if description is None: description = ""
         if notes is None: notes = ""
-        if Status is None: Status = ""
-        if percentcomplete is None: percentcomplete = ""
-        if startdate is None: startdate = ""
-        if enddate is None: enddate = ""
+        if Status is None: Status = "New"
+        if percentcomplete is None: percentcomplete = 0.0
+        if startdate is None: startdate = datetime(1900,1,1)
+        if enddate is None: enddate = datetime(1900,1,1)
 
         self.definition = {"_id": _id, "projectname": projectname, "description": description, "notes": notes,
                            "Status": Status, "percentcomplete": percentcomplete, "startdate": startdate,
@@ -192,9 +196,9 @@ class Projects:
             self.definition["milestones"] = milestones
 
     def update_projects(self, _id=None, projectname: str = None, description: str = None, notes: str = None,
-                        Status: str = None, percentcomplete: str = None, startdate: str = None, enddate: str = None,
-                        clientid: object = None, projectmanagerid: ObjectId = None, projectteam: [] = None,
-                        milestones: [] = None):
+                        Status: str = None, percentcomplete: float = None, startdate: datetime = None,
+                        enddate: datetime = None, clientid: ObjectId = None, projectmanagerid: ObjectId = None,
+                        projectteam: [] = None, milestones: [] = None):
         if _id is not None:
             if type(_id) is str:
                 self.definition["_id"] = ObjectId(_id)
@@ -232,23 +236,29 @@ class Projects:
 
 
 class Tasks:
-    def __init__(self, _id=None, taskname: str = "", description: str = "", notes: str = "", status: str = "",
-                  percentagecomplete: str = "", startdate: str = "", duedate: str = "", completedate: str = "",
-                  contactid: ObjectId = None, ownerid: ObjectId = None, milestoneid: ObjectId = None,
-                  projectid: ObjectId = None):
+    def __init__(self, _id=None, taskname: str = "", description: str = "", notes: str = "", status: str = "Active",
+                 percentagecomplete: str = "", startdate: datetime = datetime(1900,1,1),
+                 duedate: datetime = datetime(1900,1,1), completedate: datetime = datetime(1900,1,1),
+                 contactid: ObjectId = None, ownerid: ObjectId = None, milestoneid: ObjectId = None,
+                 projectid: ObjectId = None):
         if _id is None:
             _id = ObjectId()
         else:
             if type(_id) is str:
                 _id = ObjectId(_id)
+        if ownerid is None:
+            ownerid = {}
+        if contactid is None:
+            contactid = {}
+
         if taskname is None: taskname = ""
         if description is None: description = ""
         if notes is None: notes = ""
-        if status is None: status = ""
-        if percentagecomplete is None: percentagecomplete = ""
-        if startdate is None: startdate = ""
-        if duedate is None: duedate = ""
-        if completedate is None: completedate = ""
+        if status is None: status = "Active"
+        if percentagecomplete is None: percentagecomplete = 0
+        if startdate is None: startdate = datetime(1900,1,1)
+        if duedate is None: duedate = datetime(1900,1,1)
+        if completedate is None: completedate = datetime(1900,1,1)
 
         self.definition = {"_id": _id, "taskname": taskname, "description": description, "notes": notes,
                            "status": status, "percentagecomplete": percentagecomplete, "startdate": startdate,
@@ -256,11 +266,9 @@ class Tasks:
                            "milestoneid": milestoneid, "projectid": projectid}
 
     def update_tasks(self, _id=None, taskname: str = None, description: str = None, notes: str = None,
-                     status: str = None,
-                     percentagecomplete: str = None, startdate: str = None, duedate: str = None,
-                     completedate: str = None,
-                     contactid: ObjectId = None, ownerid: ObjectId = None, milestoneid: ObjectId = None,
-                     projectid: ObjectId = None):
+                     status: str = None, percentagecomplete: str = None, startdate: datetime = None,
+                     duedate: datetime = None, completedate: datetime = None, contactid: ObjectId = None,
+                     ownerid: ObjectId = None, milestoneid: ObjectId = None, projectid: ObjectId = None):
         if _id is not None:
             if type(_id) is str:
                 self.definition["_id"] = ObjectId(_id)

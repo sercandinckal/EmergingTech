@@ -516,23 +516,15 @@ function loadTasksTable(){
 					}},
 					{ data: "taskname" },
 					{ data: "description" },
+					{ data: "status" },
 					{ data: "duedate" },
 					{ data: "percentagecomplete" },
 					{ data: "ownerid",
 						"render": function ( data, type, row, meta ) {
-							if(data == null){
+							if(row['ownername'] == null){
 								return 'None';
 							}else{
 								return '<a href="/employees?userid='+data+'">'+row['ownername']+'</a>';
-							}
-						}
-					},
-					{ data: "contactid",
-						"render": function ( data, type, row, meta ) {
-							if(data == null){
-								return 'None';
-							}else{
-								return '<a href="/clients?contactid='+data+'">'+row['contact']['firstname']+' '+ row['contact']['lastname']+'</a>';
 							}
 						}
 					}

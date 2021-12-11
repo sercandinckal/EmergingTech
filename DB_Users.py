@@ -1,3 +1,6 @@
+'''
+Class in charge of performing CRUD on the user Collection
+'''
 from bson import ObjectId
 from datetime import datetime, timedelta
 from MongoCollection import MongoCollection
@@ -63,6 +66,22 @@ class UsersCollection:
         column_str = {"_id", "firstname", "lastname", "title", "role", "email", "phone", "notes", "usercode",
                       "accesstype"}
         condition_str = {"usercode": usercode}
+        result = self.myCol.find_one(condition=condition_str, columns=column_str)
+        return result
+
+    # not sure if this will be needed or not
+    def get_by_email(self, email: str) -> {}:
+        column_str = {"_id", "firstname", "lastname", "title", "role", "email", "phone", "notes", "usercode",
+                      "accesstype"}
+        condition_str = {"email": email}
+        result = self.myCol.find_one(condition=condition_str, columns=column_str)
+        return result
+
+    # not sure if this will be needed or not
+    def get_by_accessType(self, accesstype: str) -> {}:
+        column_str = {"_id", "firstname", "lastname", "title", "role", "email", "phone", "notes", "usercode",
+                      "accesstype"}
+        condition_str = {"accesstype": accesstype}
         result = self.myCol.find_one(condition=condition_str, columns=column_str)
         return result
 

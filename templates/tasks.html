@@ -143,20 +143,82 @@
 				text-align: center;
 			}
 		}
-		/* Form Style*/
+
+		/* The popup form - hidden by default */
+		.form-popup {
+		  display: none;
+		  position: center;
+		  bottom: 0;
+		  right: 20px;
+		  border: 7px solid #f1f1f1;
+		  z-index: 9;
+		}
+		
+
+		/* Add styles to the form container */
+		.form-container {
+		  max-width: 600px;
+		  padding: 10px;
+		  background-color: white;
+		}
+
 		.form_element{
-			display: inline-block;
-			margin:1px;
+		  display: inline-block;
+		  margin:1px;
+		  margin-right:10px;
+		  width:230px;
 		}
-		label.form_element {
-			float: left;
-			width: 120px;
-			text-align: right;
+
+		/* Full-width input fields */
+		.form-container input[type=text], 
+		.form-container input[type=email],
+		.form-container input[type=tel],
+		.form-container input[type=date],
+		.form-container input[type=number],
+		.form-container input[type=password],
+		.form-container select, 
+		.form-container textarea{
+		  width: 100%;
+		  padding: 15px;
+		  margin: 8px 0 22px 0;
+		  border: none;
+		  background: #f1f1f1;
 		}
-		input.form_element{
-			margin-left: 16px;
-			margin-bottom: 5px;
+
+		/* When the inputs get focus, do something */
+		.form-container input[type=text]:focus, 
+		.form-container input[type=email]:focus, 
+		.form-container input[type=tel]:focus, 
+		.form-container input[type=date]:focus, 
+		.form-container input[type=number]:focus, 
+		.form-container input[type=password]:focus, 
+		.form-container select:focus, 
+		.form-container textarea:focus {
+		  background-color: #ddd;
+		  outline: none;
 		}
+
+		/* Set a style for the submit/login button */
+		.form-container .btn {
+		  background-color: #04AA6D;
+		  color: white;
+		  padding: 15px 20px;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  margin-bottom:10px;
+		  opacity: 0.8;
+		}
+
+		/* Add a red background color to the cancel button */
+		.form-container .cancel {
+		  background-color: red;
+		}
+
+		/* Add some hover effects to buttons */
+		.form-container .btn:hover, .open-button:hover {
+		  opacity: 1;
+		
 	</style>
 
 </head>
@@ -217,6 +279,7 @@
               <th>Task Name</th>
               <th>Task Description</th>
               <th>Due Date</th>
+              <th>Status</th>
               <th>% Complete</th>
               <th>Assigned To</th>
               <th>Contact</th>
@@ -226,7 +289,87 @@
           </thead>
       </table>
       <!-- Task form-->
-      <div></div>
+      <div class="form-popup" id="taskFormContainer">
+		  <form class="form-container" id="taskForm">
+			<input type="hidden" id="taskid" name="taskid" disabled>
+			<input type="hidden" id="projectid" name="projectid" disabled>
+			<input type="hidden" id="milestoneid" name="milestoneid" disabled>
+			<input type="hidden" id="ownerid" name="ownerid" disabled>
+			<input type="hidden" id="contactid" name="contactid" disabled>
+			<fieldset>
+				<div class="form_element">
+					<label for="projectname"><b>Project Name</b></label>
+					<div id='projectname'></div>
+				</div>
+				
+				<div class="form_element">
+					<label for="milestonename"><b>Milestone Name</b></label>
+					<select id="milestonename" required></select>
+				</div>
+				
+				<div class="form_element">	
+					<label for="taskname"><b>Task Name</b></label>
+					<input type="text" placeholder="Task Name" id="taskname" name="taskname" required>
+				</div>
+				
+				<div class="form_element">
+					<label for="description"><b>Description</b></label>
+					<input type="text" id="description" name="description" placeholder="Description">
+				</div>
+				
+				<div class="form_element">
+					<label for="ownername"><b>Task Owner</b></label>
+					<select id="ownername"></select>
+				</div>
+				
+				<div class="form_element">	
+					<label for="contactname"><b>Contact Name</b></label>
+					<select id="contactname"></select>
+				</div>
+				
+				<div class="form_element">
+					<label for="status"><b>Status</b></label>
+					<select name="status" id="status" >
+						<option value="New" selected="selected">New</option>
+						<option value="Active">Active</option>
+						<option value="Closed">Closed</option>
+						<option value="On Hold">On Hold</option>
+						<option value="Cancelled">Cancelled</option>
+					</select>
+				</div>
+				
+				<div class="form_element">
+					<label for="percentagecomplete"><b>Percentage Complete</b></label>
+					<input type="number" placeholder="0%" name="percentagecomplete" id="percentagecomplete" min="0" max="100">
+				</div>
+				
+				<div class="form_element">
+					<label for="startdate"><b>Start Date</b></label><br>
+					<input type="date" id="startdate" name="startdate" placeholder="yyyy-MM-dd" min="2021-01-01" max="2030-12-31">
+				</div>
+				
+				<div class="form_element">
+					<label for="duedate"><b>End date</b></label><br>
+					<input type="date" id="duedate" name="duedate" placeholder="yyyy-MM-dd" min="2021-01-01" max="2030-12-31">
+				</div>
+				
+				<div class="form_element">
+					<label for="notes"><b>Notes</b></label>
+					<textarea id="notes" name="notes" rows="4" cols="30" value=""></textarea>
+				</div>
+			</fieldset>
+			
+			<fieldset>
+				<div class="form_element">
+					<button type="submit" class="btn">Submit</button>
+				</div>
+				
+				<div class="form_element">
+					<button type="button" class="btn cancel" id="task_cancelbtn">Close</button>
+				</div>
+			</fieldset>
+		  </form>
+	  </div>
   </div>
 
 
@@ -266,88 +409,321 @@ function w3_close() {
 }
 
 //Loads projects table
-	function loadTasksTable(){
-		$.ajax({
+function loadTasksTable(){
+	tasksTable=$('#tasksTable').DataTable({
+		ajax:  {
 			"url": "/gettasks",
 			"type": "POST",
+			"data": {},
+			"dataSrc":""
+		},
+		columns: [
+			{ data: "_id",
+				"visible": false,
+				"searchable": false },
+			{ data: "projectid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+			}},
+			{ data: "milestoneid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?milestoneid='+data+'">'+row['milestonename']+'</a>';
+			}},
+			{ data: "taskname" },
+			{ data: "description" },
+			{ data: "duedate" },
+			{ data: "status" },
+			{ data: "percentagecomplete" },
+			{ data: "ownerid",
+				"render": function ( data, type, row, meta ) {
+					if(row['ownername'] == null){
+						return 'None';
+					}else{
+						return '<a href="/employees?userid='+data+'">'+row['ownername']+'</a>';
+					}
+				}
+			},
+			{ data: "contactid",
+				"render": function ( data, type, row, meta ) {
+					if(data == null){
+						return 'None';
+					}else{
+						return '<a href="/clients?contactid='+data+'">'+row['contact']['firstname']+' '+ row['contact']['lastname']+'</a>';
+					}
+				}
+			},
+			{
+				data: null,
+				className: "dt-center editor-edit",
+				defaultContent: '<i class="fa fa-pencil"/>',
+				orderable: false
+			},
+			{
+				data: null,
+				className: "dt-center editor-delete",
+				defaultContent: '<i class="fa fa-trash"/>',
+				orderable: false
+			}
+		]
+	});
+}
+
+//refresh task data
+function refreshTasksTable(){
+	$('#tasksTable').DataTable().ajax.reload();
+}
+
+//reload milestone, owner, and contact dropdowns
+function refreshDropDown(){
+	var data={};
+	if($("#projectid").val() !=''){
+		data = {"projectid": $("#projectid").val()};
+	}else if($("#projectname").val() !=''){
+		data = {"projectid": $("#projectname").val()};
+	}
+	//load milestone dropdown
+	$.ajax({
+		"url": "/getmilestones",
+		"type": "POST",
+		"data": data,
+		"success":function(response){
+			$("#milestonename").empty();
+			$("#milestonename").append("<option>Select Milestone</option>");
+			var len = response.length;
+			for( var i = 0; i<len; i++){
+				var id = response[i]['milestoneid'];
+				var name = response[i]['milestonename'];
+				$("#milestonename").append("<option value='"+id+"'>"+name+"</option>");
+				$("#milestonename").val($("#milestoneid").val());
+			}
+		}
+	});
+	//Load Owner dropdown
+	$.ajax({
+		"url": "/getprjteam",
+		"type": "POST",
+		"data": data,
+		"success":function(response){
+			$("#ownername").empty();
+			$("#ownername").append("<option>Assigned To</option>");
+			var len = response.length;
+			for( var i = 0; i<len; i++){
+				var id = response[i]['prjteamid'];
+				var name = response[i]['firstname']+' '+response[i]['lastname'];
+				$("#ownername").append("<option value='"+id+"'>"+name+"</option>");
+				$("#ownername").val($("#ownerid").val());
+			}
+		}
+	});
+	//Load Contacts dropdown
+	$.ajax({
+		"url": "/getcontacts",
+		"type": "POST",
+		"data": data,
+		"success":function(response){
+			$("#contactname").empty();
+			$("#contactname").append("<option>Select Contact</option>");
+			var len = response.length;
+			for( var i = 0; i<len; i++){
+				var id = response[i]['_id'];
+				var name = response[i]['firstname']+' '+response[i]['lastname'];
+				$("#contactname").append("<option value='"+id+"'>"+name+"</option>");
+				$("#contactname").val($("#contactid").val());
+			}
+		}
+	});
+}
+
+//Close form
+function closeTasksForm(){
+	$("#taskForm").trigger("reset");
+	$("#taskid").removeAttr("value");
+	$("#projectid").removeAttr("value");
+	$("#milestoneid").removeAttr("value");
+	$("#ownerid").removeAttr("value");
+	$("#contactid").removeAttr("value");
+	var projectname_div = $('<div/>',{
+		text : "",
+		id : $("#projectname").attr('id')
+	});
+	$("#projectname").replaceWith(projectname_div);
+	$("#milestonename").empty();
+	$("#ownername").empty();
+	$("#contactname").empty();
+	
+	$("#taskFormContainer").css("display","None");
+	$(window).scrollTop($("#createTask").offset().top);
+}
+
+//Submit form
+function submitTasks(){
+	var taskid = $("#taskid").val();
+	var projectid = $("#projectid").val();
+	var milestoneid = $("#milestonename").val();
+	var ownerid = $("#ownername").val();
+	var contactid = $("#contactname").val();
+	
+	var taskname = $("#taskname").val();
+	var milestonename = $("#milestonename option:selected").text();
+	var ownername = $("#ownername option:selected").text();
+	var contactname = $("#contactname option:selected").text();
+	
+	var description = $("#description").val();
+	var notes = $("#notes").val();
+	var status = $("#status").val();
+	var percentagecomplete = $("#percentagecomplete").val();
+	
+	var startdate = $("#startdate").val();
+	var duedate = $("#duedate").val();
+	
+	var url;
+	if (taskid != ""){
+		url = "/updatetask";
+		var projectname = $("#projectname").text();
+		var projectid = $("#projectid").val();
+	}else{
+		url = "/createtask";
+		var projectname = $("#projectname option:selected").text();
+		var projectid = $("#projectname").val();
+	}
+	
+	var data = {
+		"taskid": taskid,
+		"taskname": taskname,
+		"projectid": projectid,
+		"projectname": projectname,
+		"milestoneid": milestoneid,
+		"milestonename": milestonename,
+		"ownerid": ownerid,
+		"ownername": ownername,
+		"contactid": contactid,
+		"contactname": contactname,
+		"description": description,
+		"status": status,
+		"percentagecomplete": percentagecomplete,
+		"startdate": startdate,
+		"duedate": duedate,
+		"notes": notes
+	};
+	$.ajax({
+		"url": url,
+		"data": data,
+		"type": "POST",
+		"success": function(data){
+			closeTasksForm();
+			alert("success");
+			refreshTasksTable();
+		},
+		"error": function(XMLHttpRequest, textStatus, errorThrown) {
+			var err = JSON.parse(XMLHttpRequest.responseText);
+			alert(err.Message);
+		}
+	});
+}
+
+//delete record
+function deleteTask(row){
+	if (confirm("Please confirm you wish to delete")) {
+		$.ajax({
+			"url": "/deletetask",
+			"data": {"taskid":row._id},
+			"type": "POST",
 			"success": function(data){
-				tasksTable =$('#tasksTable').DataTable({
-					data,
-					"columnDefs": [],
-					columns: [
-						{ data: "_id",
-							"visible": false,
-							"searchable": false },
-						{ data: "projectid",
-							"render": function ( data, type, row, meta ) {
-								return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
-						}},
-						{ data: "milestoneid",
-							"render": function ( data, type, row, meta ) {
-								return '<a href="/projects?milestoneid='+data+'">'+row['milestonename']+'</a>';
-						}},
-						{ data: "taskname" },
-						{ data: "description" },
-						{ data: "duedate" },
-						{ data: "percentagecomplete" },
-						{ data: "ownerid",
-							"render": function ( data, type, row, meta ) {
-                                if(data == null){
-									return 'None';
-								}else{
-									return '<a href="/employees?userid='+data+'">'+row['ownername']+'</a>';
-								}
-							}
-						},
-						{ data: "contactid",
-							"render": function ( data, type, row, meta ) {
-                                if(data == null){
-									return 'None';
-								}else{
-									return '<a href="/clients?contactid='+data+'">'+row['contact']['firstname']+' '+ row['contact']['lastname']+'</a>';
-								}
-							}
-						},
-						{
-                            data: null,
-                            className: "dt-center editor-edit",
-                            defaultContent: '<i class="fa fa-pencil"/>',
-                            orderable: false
-                        },
-                        {
-                            data: null,
-                            className: "dt-center editor-delete",
-                            defaultContent: '<i class="fa fa-trash"/>',
-                            orderable: false
-                        }
-					]
-				});
+				refreshTasksTable();
+				alert("Success");
 			},
 			"error": function(XMLHttpRequest, textStatus, errorThrown) {
-				tasksTable = $('#tasksTable').DataTable({data:[]});
-				tasksTable.column(0).visible(false);
+				var err = JSON.parse(XMLHttpRequest.responseText);
+				alert(err.Message);
 			}
 		});
 	}
+}
+
 
 $(document).ready(function(){
 	loadTasksTable();
 	// New task record
     $('#createTask').on('click', function (e) {
+        closeTasksForm();
+		var projectname_div = $('<select/>',{
+			id : "projectname",
+			required : true,
+			onchange : "refreshDropDown()"
+		});
+		$("#projectname").replaceWith(projectname_div);
+		$.ajax({
+			"url": "/getprojects",
+			"type": "POST",
+			"data": {},
+			"success":function(response){
+				$("#projectname").empty();
+				$("#projectname").append("<option>Select Project</option>");
+				var len = response.length;
+				for( var i = 0; i<len; i++){
+					var id = response[i]['_id'];
+					var name = response[i]['projectname'];
+					$("#projectname").append("<option value='"+id+"'>"+name+"</option>");
+				}
+			}
+		});
+		
+        $("#taskFormContainer").css("display","block");
+		$("#projectname").focus();
         e.preventDefault();
-        alert('Create new record');
     });
 
     // Edit task record
     $('#tasksTable').on('click', 'td.editor-edit', function (e) {
+		closeTasksForm();
+		var row  = tasksTable.row(this).data()
+		
+		$("#taskid").val(row._id);
+		$("#projectid").val(row.projectid);
+		$("#milestoneid").val(row.milestoneid);
+		$("#ownerid").val(row.ownerid);
+		$("#contactid").val(row.contactid);
+		$("#taskname").val(row.taskname);
+		$("#description").val(row.description);
+		$("#notes").val(row.notes);
+		$("#status").val(row.status);
+		$("#percentagecomplete").val(row.percentagecomplete);
+		if(row.startdate){
+			$("#startdate").val(new Date(row.startdate).toISOString().substr(0, 10));
+		}
+		if(row.startdate){
+			$("#duedate").val(new Date(row.duedate).toISOString().substr(0, 10));
+		}
+		refreshDropDown();
+		var projectname_div = $('<div/>',{
+			text : row.projectname,
+			id : "projectname"
+		});
+		$("#projectname").replaceWith(projectname_div);
+		
+        $("#taskFormContainer").css("display","block");
+		$("#taskname").focus();
+		
         e.preventDefault();
-        alert('Edit record');
     });
 
-    // Delete task record
+    // Delete record
     $('#tasksTable').on('click', 'td.editor-delete', function (e) {
+        var row  = taskTable.row(this).data()
+		deleteTask(row);
+		e.preventDefault();
+    });
+	
+	// Cancel button
+    $('#task_cancelbtn').on('click', function (e) {
+		closeTasksForm();
         e.preventDefault();
-        alert('Delete record');
+    });
+	
+	// Submit button
+    $('#taskForm').on('submit', function (e) {
+		submitTasks();
+        e.preventDefault();
     });
 });
 </script>
