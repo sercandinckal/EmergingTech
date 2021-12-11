@@ -109,19 +109,20 @@ class ProjectsCollection:
             condition_str = {}
 
         join_str = [
-            # phase 0 apply filter if needed
-            {"$match": condition_str},
-            # phase 1 breakup array
+            # phase 0 breakup array
             {"$unwind": {
                 "path": "$milestones",
                 "includeArrayIndex": "milestonesidx",
                 "preserveNullAndEmptyArrays": True
             }},
+            # phase 1 apply filter if needed
+            {"$match": condition_str},
             # phase 2 Select related columns and put in presentable format.
             {"$project": {
                 "_id": "$milestones.milestoneid",
                 "milestoneid": "$milestones.milestoneid",
                 "projectid": "$_id",
+                "milestonesidx": "$milestonesidx",
                 "projectname": "$projectname",
                 "milestonename": "$milestones.milestonename",
                 "duedate": "$milestones.duedate",
@@ -139,19 +140,31 @@ class ProjectsCollection:
         condition_str = {"milestones.milestoneid": ObjectId(milestoneid)}
         return self.get_all_milestones(condition_str=condition_str)
 
+    def insert_milestones(self, projectid: str, milestone: Milestones):
+        condition_str = {"_id": ObjectId(projectid)}
+        return self.myCol.update_one(condition_str, {"$addToSet": {'milestones':milestone.definition}})
+
+    def update_milestones_by_idx(self, projectid: str, idx: int, milestone: Milestones):
+        condition_str = {"_id": ObjectId(projectid)}
+        return self.myCol.update_one(condition_str, {"$set": {'milestones'+str(idx)+'.content': milestone.definition}})
+
+    def delete_milestones(self, projectid: str, milestoneid: int):
+        condition_str = {"_id": ObjectId(projectid)}
+        return self.myCol.update_one(condition_str, {"$pull": {"milestones": {"milestoneid": ObjectId(milestoneid)}}})
+
     def get_all_prjteam(self, condition_str: {} = None):
         if condition_str is None:
             condition_str = {}
 
         join_str = [
-            # phase 0 apply filter if needed
-            {"$match": condition_str},
             # phase 1 breakup array
             {"$unwind": {
                 "path": "$projectteam",
                 "includeArrayIndex": "prjtteamidx",
                 "preserveNullAndEmptyArrays": True
             }},
+            # phase 1 apply filter if needed
+            {"$match": condition_str},
             # phase 2 connect to user table with lookup
             {"$lookup": {
                 "from": "Users",
@@ -185,3 +198,15 @@ class ProjectsCollection:
     def get_prjteam_by_prjteamid(self, prjteamid: str):
         condition_str = {"projectteam.prjteamid": ObjectId(prjteamid)}
         return self.get_all_prjteam(condition_str=condition_str)
+
+    def insert_prjteam(self, projectid: str, prjteam: ProjectTeam):
+        condition_str = {"_id": ObjectId(projectid)}
+        return self.myCol.update_one(condition_str, {"$addToSet": {'projectteam': prjteam.definition}})
+
+    def update_prjteam_by_idx(self, projectid: str, idx: int, prjteam: ProjectTeam):
+        condition_str = {"_id": ObjectId(projectid)}
+        return self.myCol.update_one(condition_str, {"$set": {'projectteam'+str(idx)+'.content': prjteam.definition}})
+
+    def delete_prjteam(self, projectid: str, prjteamid: str):
+        condition_str = {"_id": ObjectId(projectid)}
+        return self.myCol.update_one(condition_str, {"$pull": {"projectteam": {"prjteamid": ObjectId(prjteamid)}}})
