@@ -1,3 +1,7 @@
+'''
+Class in charge of performing CRUD on tasks database
+'''
+
 from bson import ObjectId
 from datetime import datetime, timedelta
 from MongoCollection import MongoCollection
@@ -8,11 +12,13 @@ class TasksCollection:
     def __init__(self, database_name: str):
         self.myCol = MongoCollection(database_name, "Tasks")
 
+    #get single task by id
     def get_by_id(self, _id: str) -> {}:
         condition_str = {"_id": ObjectId(_id)}
         result = self.myCol.find_one(condition=condition_str)
         return result
 
+    #get task dashboard information
     def get_dashboard(self, condition_str: {} = None):
         if condition_str is None:
             condition_str = {}
@@ -55,14 +61,17 @@ class TasksCollection:
         ]
         return self.myCol.aggregate(join_str)
 
+    # get tasks by a specific project manager
     def get_pm_dashboard(self, projectmanagerid: str):
         condition_str = {'projectmanagerid': ObjectId(projectmanagerid)}
         return self.get_dashboard(condition_str)
 
+    #get task owner daskboard information
     def get_owner_dashboard(self, ownerid: str):
         condition_str = {'tasks.ownerid': ObjectId(ownerid)}
         return self.get_dashboard(condition_str)
 
+    # get all task information, joining to the task owner, contact and projects tables
     def get_all(self, status: str = "All", late_only: bool = False, condition_str: {} = None):
         if condition_str is None:
             condition_str = {}
@@ -138,28 +147,32 @@ class TasksCollection:
         ]
         return self.myCol.aggregate(join_str)
 
+    # get all tasks for a specific task owner
     def get_by_task_owner(self, ownerid: str, status: str = "All", late_only: bool = False):
         return self.get_all(status=status, late_only=late_only, condition_str={"ownerid": ObjectId(ownerid)})
 
+    # get tasks by milestone
     def get_by_milestone(self, milestoneid, status: str = "All", late_only: bool = False):
         return self.get_all(status=status, late_only=late_only, condition_str={"milestoneid": ObjectId(milestoneid)})
 
+    # get taks by project id
     def get_by_project(self, projectid, status: str = "All", late_only: bool = False):
         return self.get_all(status=status, late_only=late_only, condition_str={"projectid": ObjectId(projectid)})
 
-    def get_by_contract(self, contactid, status: str = "All", late_only: bool = False):
+    # get task by contact id
+    def get_by_contact(self, contactid, status: str = "All", late_only: bool = False):
         return self.get_all(status=status, late_only=late_only, condition_str={"contactid": ObjectId(contactid)})
 
+    # delete task by its id
     def delete_by_id(self, _id: str):
         condition_str = {"_id": ObjectId(_id)}
-        result = self.myCol.delete_one(condition_str)
-        return result
+        return self.myCol.delete_one(condition_str)
 
+    # update task by its id
     def update_by_id(self, _id: str, task: Tasks):
         condition_str = {"_id": ObjectId(_id)}
-        result = self.myCol.update_one(condition_str, {"$set": task.definition})
-        return result
+        return self.myCol.update_one(condition_str, {"$set": task.definition})
 
+    # insert a new task
     def insert(self, task: Tasks):
-        result = self.myCol.insert(task.definition)
-        return result
+        return self.myCol.insert(task.definition)
