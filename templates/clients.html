@@ -1,83 +1,506 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Clients</title>
-</head>
-<body>
 
-<!-- Clients table-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Project: Group 3</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+	<style>
+		<!--Table CSS-->
+		html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+		 *{
+			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+		}
+		body{
+			font-family: Helvetica;
+			-webkit-font-smoothing: antialiased;
+			background: gray;
+		}
+		h2{
+			text-align: center;
+			font-size: 18px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: black;
+			padding: 30px 0;
+		}
+
+
+
+
+		/* Table Styles */
+
+		.table-wrapper{
+			margin: 10px 70px 70px;
+			box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+		}
+
+		.fl-table {
+			border-radius: 5px;
+			font-size: 12px;
+			font-weight: normal;
+			border: none;
+			border-collapse: collapse;
+			width: 100%;
+			max-width: 100%;
+			white-space: nowrap;
+			background-color: white;
+		}
+
+		.fl-table td, .fl-table th {
+			text-align: center;
+			padding: 8px;
+		}
+
+		.fl-table td {
+			border-right: 1px solid #f8f8f8;
+			font-size: 12px;
+		}
+
+		.fl-table thead th {
+			color: #ffffff;
+			background: #4FC3A1;
+		}
+
+
+		.fl-table thead th:nth-child(odd) {
+			color: #ffffff;
+			background: #324960;
+		}
+
+		.fl-table tr:nth-child(even) {
+			background: #F8F8F8;
+		}
+
+		/* Responsive */
+
+		@media (max-width: 767px) {
+			.fl-table {
+				display: block;
+				width: 100%;
+			}
+			.table-wrapper:before{
+				content: "Scroll horizontally >";
+				display: block;
+				text-align: right;
+				font-size: 11px;
+				color: white;
+				padding: 0 0 10px;
+			}
+			.fl-table thead, .fl-table tbody, .fl-table thead th {
+				display: block;
+			}
+			.fl-table thead th:last-child{
+				border-bottom: none;
+			}
+			.fl-table thead {
+				float: left;
+			}
+			.fl-table tbody {
+				width: auto;
+				position: relative;
+				overflow-x: auto;
+			}
+			.fl-table td, .fl-table th {
+				padding: 20px .625em .625em .625em;
+				height: 60px;
+				vertical-align: middle;
+				box-sizing: border-box;
+				overflow-x: hidden;
+				overflow-y: auto;
+				width: 120px;
+				font-size: 13px;
+				text-overflow: ellipsis;
+			}
+			.fl-table thead th {
+				text-align: left;
+				border-bottom: 1px solid #f7f7f9;
+			}
+			.fl-table tbody tr {
+				display: table-cell;
+			}
+			.fl-table tbody tr:nth-child(odd) {
+				background: none;
+			}
+			.fl-table tr:nth-child(even) {
+				background: transparent;
+			}
+			.fl-table tr td:nth-child(odd) {
+				background: #F8F8F8;
+				border-right: 1px solid #E6E4E4;
+			}
+			.fl-table tr td:nth-child(even) {
+				border-right: 1px solid #E6E4E4;
+			}
+			.fl-table tbody td {
+				display: block;
+				text-align: center;
+			}
+		}
+
+        /* The popup form - hidden by default */
+		.form-popup {
+		  display: none;
+		  position: center;
+		  bottom: 0;
+		  right: 20px;
+		  border: 7px solid #f1f1f1;
+		  z-index: 9;
+		}
+
+
+		/* Add styles to the form container */
+		.form-container {
+		  max-width: 600px;
+		  padding: 10px;
+		  background-color: white;
+		}
+
+		.form_element{
+		  display: inline-block;
+		  margin:1px;
+		  margin-right:10px;
+		  width:230px;
+		}
+
+		/* Full-width input fields */
+		.form-container input[type=text], 
+		.form-container input[type=email],
+		.form-container input[type=tel],
+		.form-container input[type=date],
+		.form-container input[type=number],
+		.form-container input[type=password],
+		.form-container select, 
+		.form-container textarea{
+		  width: 100%;
+		  padding: 15px;
+		  margin: 8px 0 22px 0;
+		  border: none;
+		  background: #f1f1f1;
+		}
+
+		/* When the inputs get focus, do something */
+		.form-container input[type=text]:focus, 
+		.form-container input[type=email]:focus, 
+		.form-container input[type=tel]:focus, 
+		.form-container input[type=date]:focus, 
+		.form-container input[type=number]:focus, 
+		.form-container input[type=password]:focus, 
+		.form-container select:focus, 
+		.form-container textarea:focus {
+		  background-color: #ddd;
+		  outline: none;
+		}
+
+		/* Set a style for the submit/login button */
+		.form-container .btn {
+		  background-color: #04AA6D;
+		  color: white;
+		  padding: 15px 20px;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  margin-bottom:10px;
+		  opacity: 0.8;
+		}
+
+		/* Add a red background color to the cancel button */
+		.form-container .cancel {
+		  background-color: red;
+		}
+
+		/* Add some hover effects to buttons */
+		.form-container .btn:hover, .open-button:hover {
+		  opacity: 1;
+		}
+	</style>
+</head>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+  <a href="main.html">  <img alt="logo" src='{{url_for("static",filename="images/logo.png")}}'         width=150" height="50">  </a>
+
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-col s4">
+      <img src='{{url_for("static",filename="images/manager/b1.png")}}' class="w3-circle w3-margin-right" style="width:46px">
+    </div>
+    <div class="w3-col s8 w3-bar">
+      <span>Welcome, <strong>{{UserName}}</strong></span><br>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <a href="/dashboard" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Dashboard</a>
+    <a href="/projects" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Projects</a>
+    <a href="/tasks" class="w3-bar-item w3-button w3-padding"><i class="fa fa-tasks fa-fw"></i>  Tasks</a>
+    <a href="/clients" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-address-card fa-fw"></i> Clients </a>
+    <a href="/employees" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Employees</a><br><br>
+	<a href="/logout" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw"></i>  Logout</a><br><br>
+  </div>
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-dashboard"></i> My Clients</b></h5>
+  </header>
+
+  <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-quarter">
+      <div class="w3-container w3-red w3-padding-16">
+        <div class="w3-left"></div>
+        <div class="w3-right">
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Messages</h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-blue w3-padding-16">
+        <div class="w3-left"></div>
+        <div class="w3-right">
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Clients</h4>
+      </div>
+    </div>
+  </div>
+   <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-quarter">
+      <div class="w3-container w3-red w3-padding-16">
+        <div class="w3-left"></div>
+        <div class="w3-right">
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Represenative Contacts</h4>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-blue w3-padding-16">
+        <div class="w3-left"></div>
+        <div class="w3-right">
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Projects</h4>
+      </div>
+    </div>
+  </div>
+
   <h2>Clients</h2>
-  {% if clients %}
   <div class="table-wrapper">
-      <table class="fl-table">
+
+      <!-- Clients table-->
+      <a id="createClient">+ Create new client record</a>
+      <table class="fl-table" id="clientsTable">
           <thead>
           <tr>
+              <th>id</th>
               <th>Client Name</th>
               <th>Client Descrption</th>
               <th>Industry</th>
               <th>Phone</th>
               <th>Email</th>
-              <th>Open Projects</th>
+              <th></th>
+              <th></th>
           </tr>
           </thead>
-          <tbody>
-            {% for client in clients %}
-              <tr>
-                <td>{{client.clientname}}</td>
-                <td>{{client.description}}</td>
-                <td>{{client.industry}}</td>
-                <td>{{client.phone}}</td>
-                <td>{{client.email}}</td>
-              </tr>
-            {% endfor %}
-          <tbody>
       </table>
-  </div>
-    {% else %}
-    <p>No Clients Found</p>
-  {% endif %}
 
-<!-- Contacts table-->
+      <!-- Client Form-->
+		<div class="form-popup" id="clientFormContainer">
+		  <form class="form-container" id="clientForm">
+			<input type="hidden" id="cln_clientid" disabled>
+			<fieldset>
+			  <div class="form_element">
+				<label for="cln_name"><b>Client Name</b></label>
+				<input type="text" placeholder="Client name" id="cln_name" required>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="cln_description"><b>Description</b></label>
+				<input type="text" placeholder="Description" id="cln_description">
+			  </div>
+			  
+			  <div class="form_element">
+				 <label for="cln_email"><b>Email</b></label>
+				<input type="email" id="cln_email" pattern= "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="cln_phone"><b>Phone Number</b></label>
+				<input type="tel" placeholder="555-555-5555" id="cln_phone" pattern="\d{3}[\-]\d[3][\-]\d{4}">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="cln_industry"><b>Industry</b></label>
+				<input type="text" placeholder="Industry" id="cln_industry">
+			  </div>
+			  
+			  <div class="form_element">
+				<label>&nbsp;</label>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="cln_addr1"><b>Address Line 1</b></label><br>
+				<input type="text" id="cln_addr1">
+			  </div>
+			  <div class="form_element">
+				<label for="cln_addr2"><b>Address Line 2</b></label><br>
+				<input type="text" id="cln_addr2">
+			  </div>
+			  <div class="form_element">
+				<label for="cln_addr3"><b>Address Line 3</b></label><br>
+				<input type="text" id="cln_addr3">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="cln_country"><b>Country</b></label>
+				<input type="text" placeholder="Country" id="cln_country">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="cln_notes"><b>Notes:</b></label><br>
+				<textarea id="cln_notes" value='' rows="4" cols="30"></textarea>
+			  </div>
+			  
+			  <div class="form_element">
+				<label>&nbsp;</label>
+			  </div>
+			</fieldset>
+			<fieldset>
+			  <div class="form_element">
+				<button type="submit" class="btn">Submit</button>
+			  </div>
+			  
+			  <div class="form_element">
+				<button type="button" class="btn cancel" id='cln_cancelbtn'>Close</button>
+			  </div>
+			</fieldset>
+		  </form>
+		</div>
+	  
+  </div>
+
+
+
+
   <h2>Contacts</h2>
-  {% if contacts %}
   <div class="table-wrapper">
-      <table class="fl-table">
+      <a id="createContact">+ Create new contact record</a>
+      <!-- Contacts table-->
+      <table class="fl-table" id="contactsTable">
           <thead>
           <tr>
+              <th>id</th>
               <th>Client Name</th>
               <th>Contact Name</th>
               <th>Role</th>
               <th>Phone</th>
               <th>Email</th>
+              <th></th>
+              <th></th>
           </tr>
           </thead>
-          <tbody>
-            {% for contact in contacts %}
-              <tr>
-                <td>
-                  <a href="/clients/{{contact.clientid}}">{{contact.client.clientname}}</a>
-                </td>
-                <td>{{contact.firstname}} {{contact.lastname}}</td>
-                <td>{{contact.role}}</td>
-                <td>{{contact.phone}}</td>
-                <td>{{contact.email}}</td>
-              </tr>
-            {% endfor %}
-          <tbody>
       </table>
+      <!-- Contact Form-->
+		<div class="form-popup" id="contactFormContainer">
+		  <form class="form-container" id="contactForm">
+			<input type="hidden" id="con_contactid" disabled>
+			<input type="hidden" id="con_clientid"disabled>
+			<fieldset>
+			  <div class="form_element">
+				<label for="con_clientname"><b>Client Name</b></label>
+				<div id='con_clientname'></div>
+			  </div>
+			  <div class="form_element">
+				<label>&nbsp;</label>
+			  </div>
+			  <div class="form_element">
+				<label for="con_fname"><b>First Name</b></label>
+				<input type="text" placeholder="First name" id="con_fname" required>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="con_lname"><b>Last Name</b></label>
+				<input type="text" placeholder="Last name" id="con_lname" required>
+			  </div>
+			  
+			  <div class="form_element">
+				 <label for="con_email">Email:</label>
+				<input type="email" id="con_email" pattern= "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="con_phone"><b>Phone Number</b></label>
+				<input type="tel" placeholder="555-555-5555" id="con_phone" pattern="\d{3}[\-]\d[3][\-]\d{4}">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="con_title"><b>Title</b></label>
+				<input type="text" placeholder="Title" id="con_title">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="con_role"><b>Role</b></label>
+				<input type="text" placeholder="Role" id="con_role">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="con_notes"><b>Notes:</b></label><br>
+				<textarea id="con_notes" value='' rows="4" cols="30"></textarea>
+			  </div>
+			</fieldset>
+			<fieldset>
+			  <div class="form_element">
+				<button type="submit" class="btn">Submit</button>
+			  </div>
+			  
+			  <div class="form_element">
+				<button type="button" class="btn cancel" id='con_cancelbtn'>Close</button>
+			  </div>
+			</fieldset>
+		  </form>
+		</div>
   </div>
-    {% else %}
-    <p>No Contacts Found</p>
-  {% endif %}
+
+
 
 <!-- Active projects table-->
   <h2>My Active Projects</h2>
-  {% if projects %}
   <div class="table-wrapper">
-      <table class="fl-table">
+      <table class="fl-table" id="projectsTable">
           <thead>
           <tr>
+              <th>id</th>
               <th>Project Name</th>
               <th>Project Descrption</th>
               <th>Status</th>
@@ -88,28 +511,547 @@
           </tr>
           </thead>
           <tbody>
-            {% for project in projects %}
-              <tr>
-                <td>
-                  <a href="/projects/{{project._id}}">{{project.projectname}}</a>
-                </td>
-                <td>{{project.description}}</td>
-                <td>{{project.Status}}</td>
-                <td>{{project.startdate.strftime('%d %b %Y')}}</td>
-                <td>{{project.enddate.strftime('%d %b %Y')}}</td>
-                <td>
-                  <a href="/clients/{{project.clientid}}">{{project.client.clientname}}</a>
-                </td>
-                <td>
-                  <a href="/users/{{project.projectmanagerid}}">{{project.projectmanager.firstname}} {{project.projectmanager.lastname}}</a>
-                </td>
-              </tr>
-            {% endfor %}
-          <tbody>
       </table>
   </div>
-    {% else %}
-    <p>No Active Projects</p>
-  {% endif %}
+
+  <hr>
+  <div class="w3-container">
+    <h5>Recent Contacts</h5>
+    <ul class="w3-ul w3-card-4 w3-white">
+      <li class="w3-padding-16">
+        <img src='{{url_for("static",filename="images/manager/b2.png")}}' class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <span class="w3-xlarge">Affida - Amazon</span><br>
+      </li>
+      <li class="w3-padding-16">
+        <img src='{{url_for("static",filename="images/manager/g1.jpg")}}' class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <span class="w3-xlarge">Fatima - Service Now</span><br>
+      </li>
+      <li class="w3-padding-16">
+        <img src='{{url_for("static",filename="images/manager/g2.jpg")}}' class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <span class="w3-xlarge">Kadeem - Azure</span><br>
+      </li>
+    </ul>
+  </div>
+  <hr>
+
+
+
+  <div class="w3-panel">
+    <div class="w3-row-padding" style="margin:0 -16px">
+      <div class="w3-twothird">
+        <h5>Feeds</h5>
+        <table class="w3-table w3-striped w3-white">
+          <tr>
+            <td><i class="fa fa-user w3-text-blue w3-large"></i></td>
+            <td>New record, over 90 views.</td>
+            <td><i>10 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
+            <td>Database error.</td>
+            <td><i>15 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-users w3-text-yellow w3-large"></i></td>
+            <td>New record, over 40 users.</td>
+            <td><i>17 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-comment w3-text-red w3-large"></i></td>
+            <td>New comments.</td>
+            <td><i>25 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-bookmark w3-text-blue w3-large"></i></td>
+            <td>Check transactions.</td>
+            <td><i>28 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-laptop w3-text-red w3-large"></i></td>
+            <td>CPU overload.</td>
+            <td><i>35 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-share-alt w3-text-green w3-large"></i></td>
+            <td>New shares.</td>
+            <td><i>39 mins</i></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+    <h5>General Stats</h5>
+    <p>New Employees</p>
+    <div class="w3-grey">
+      <div class="w3-container w3-center w3-padding w3-green" style="width:25%">+25%</div>
+    </div>
+
+
+    <p>Bounce Rate</p>
+    <div class="w3-grey">
+      <div class="w3-container w3-center w3-padding w3-red" style="width:75%">75%</div>
+    </div>
+  </div>
+  <hr>
+
+
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-16 w3-light-grey">
+	<p>&copy; GROUP 3 - Emerging Technologies project </p>
+  </footer>
+
+  <!-- End page content -->
+</div>
+
+<script>
+	"use strict";
+    var clientsTable;
+    var contactsTable;
+    var projectsTable;
+	
+	// Get the Sidebar
+	var mySidebar = document.getElementById("mySidebar");
+
+	// Get the DIV with overlay effect
+	var overlayBg = document.getElementById("myOverlay");
+
+	// Toggle between showing and hiding the sidebar, and add overlay effect
+	function w3_open() {
+		if (mySidebar.style.display === 'block') {
+			mySidebar.style.display = 'none';
+			overlayBg.style.display = "none";
+		} else {
+			mySidebar.style.display = 'block';
+			overlayBg.style.display = "block";
+		}
+	}
+
+	// Close the sidebar with the close button
+	function w3_close() {
+		mySidebar.style.display = "none";
+		overlayBg.style.display = "none";
+	}
+
+	// Loads the client datatable with an ajax call & formats the columns to display
+	function loadClientsTable(){
+		clientsTable=$('#clientsTable').DataTable({
+			ajax:  {
+				"url": "/getclients",
+				"type": "POST",
+				"data": {},
+				"dataSrc":""
+			},
+			columns: [
+				{ data: "_id",
+					"visible": false,
+					"searchable": false },
+				{ data: "clientname" },
+				{ data: "description" },
+				{ data: "industry" },
+				{ data: "phone" },
+				{ data: "email" },
+				{ data: null,
+					className: "dt-center editor-edit",
+					defaultContent: '<i class="fa fa-pencil"/>',
+					orderable: false
+				},
+				{ data: null,
+					className: "dt-center editor-delete",
+					defaultContent: '<i class="fa fa-trash"/>',
+					orderable: false
+				}
+			]
+		});
+	}
+
+	// Loads contacts datatable with an ajax call & formats the columns to display
+	function loadContactsTable(){
+		contactsTable=$('#contactsTable').DataTable({
+			ajax:  {
+				"url": "/getcontacts",
+				"type": "POST",
+				"data": {},
+				"dataSrc":""
+			},
+			columns: [
+				{ data: "_id",
+					"visible": false,
+					"searchable": false },
+				{ data: "client.clientname"},
+				{ data: "firstname",
+					"render": function ( data, type, row, meta ) {
+						return data+' '+row['lastname'];
+				}},
+				{ data: "role" },
+				{ data: "phone" },
+				{ data: "email" },
+				{
+					data: null,
+					className: "dt-center editor-edit",
+					defaultContent: '<i class="fa fa-pencil"/>',
+					orderable: false
+				},
+				{
+					data: null,
+					className: "dt-center editor-delete",
+					defaultContent: '<i class="fa fa-trash"/>',
+					orderable: false
+				}
+			]
+		});	
+	}
+
+	//Loads projects datatable with an ajax call & formats the columns to display
+	function loadProjectsTable(){
+		projectsTable=$('#projectsTable').DataTable({
+			ajax:  {
+				"url": "/getprojects",
+				"type": "POST",
+				"data": {},
+				"dataSrc":""
+			},
+			columns: [
+				{ data: "_id",
+					"visible": false,
+					"searchable": false },
+				{ data: "_id",
+					"render": function ( data, type, row, meta ) {
+						return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+				}},
+				{ data: "description" },
+				{ data: "Status" },
+				{ data: "startdate" },
+				{ data: "enddate" },
+				{ data: "clientid",
+					"render": function ( data, type, row, meta ) {
+						//alert(JSON.stringify(row));
+						return '<a href="/clients?clientid='+data+'">'+row['clientname']+'</a>';
+				}},
+				{ data: "projectmanagerid",
+					"render": function ( data, type, row, meta ) {
+						return '<a href="/employees?userid='+data+'">'+row['projectmanager']['firstname']+' '+row['projectmanager']['lastname']+'</a>';
+				}},
+			]
+		});
+	}
+
+	//refresh client table data
+	function refreshClientTable(){
+		$('#clientsTable').DataTable().ajax.reload();
+	}
+
+	//refresh contact table data
+	function refreshContactTable(){
+		$('#contactsTable').DataTable().ajax.reload();
+	}
+
+	//Close client form resetting the variables
+	function closeClientForm(){
+		$("#clientForm").trigger("reset");
+		$("#cln_clientid").removeAttr("value");
+		$("#clientFormContainer").css("display","None");
+		$(window).scrollTop($("#createClient").offset().top);
+	}
+
+	//Close contact form resetting the variables
+	function closeContactForm(){
+		$("#contactForm").trigger("reset");
+		
+		var clientname_div = $('<div/>',{
+			text : "",
+			id : $("#con_clientname").attr('id')
+		});
+		$("#con_clientname").replaceWith(clientname_div);
+		
+		$("#con_contactid").removeAttr("value");
+		$("#con_clientid").removeAttr("value");
+		$("#contactFormContainer").css("display","None");
+		$(window).scrollTop($("#createContact").offset().top);
+	}
+
+	//Submit Client Form does if id is blank it creates new, else update
+	function submitClients(){
+		//gather data
+		var clientid = $("#cln_clientid").val();
+		var clientname = $("#cln_name").val();
+		var industry = $("#cln_industry").val();
+		var description = $("#cln_description").val();
+		var phone = $("#cln_phone").val();
+		var email = $("#cln_email").val();
+		var addr1 = $("#cln_addr1").val();
+		var addr2 = $("#cln_addr2").val();
+		var addr3 = $("#cln_addr3").val();
+		var country = $("#cln_country").val();
+		var notes = $("#cln_notes").val();
+
+		
+		var url;
+		if (clientid != ""){
+			url = "/updateclient";
+		}else{
+			url = "/createclient";
+		}
+		
+		//format as json
+		var data = {
+			"clientid": clientid,
+			"clientname": clientname,
+			"industry": industry,
+			"description": description,
+			"phone": phone,
+			"email": email,
+			"addr1": addr1,
+			"addr2": addr2,
+			"addr3": addr3,
+			"country": country,
+			"notes": notes
+		};
+		
+		//async submit 
+		$.ajax({
+			"url": url,
+			"data": data,
+			"type": "POST",
+			"success": function(data){
+				//if success close form, give alert and refresh datatable
+				closeClientForm();
+				alert("success");
+				refreshClientTable();
+			},
+			"error": function(XMLHttpRequest, textStatus, errorThrown) {
+				var err = JSON.parse(XMLHttpRequest.responseText);
+				//if error prompt user
+				alert(err.Message);
+			}
+		});
+	}
+
+	//Submit Contact form
+	function submitContacts(){
+		var contactid = $("#con_contactid").val();
+		var firstname = $("#con_fname").val();
+		var lastname = $("#con_lname").val();
+		var title = $("#con_title").val();
+		var role = $("#con_role").val();
+		var email = $("#con_email").val();
+		var phone = $("#con_phone").val();
+		var notes = $("#con_notes").val();
+		
+		var url;
+		if (contactid != ""){
+			url = "/updatecontact";
+			var clientname = $("#con_clientname").text();
+			var clientid = $("#con_clientid").val();
+		}else{
+			url = "/createcontact";
+			var clientname = $("#con_clientname option:selected").text();
+			var clientid = $("#con_clientname").val();
+		}
+		
+		
+		var data = {
+			"contactid": contactid,
+			"firstname": firstname,
+			"lastname": lastname,
+			"title": title,
+			"role": role,
+			"email": email,
+			"phone": phone,
+			"notes": notes,
+			"clientid": clientid,
+			"clientname": clientname
+		};
+		
+		$.ajax({
+			"url": url,
+			"data": data,
+			"type": "POST",
+			"success": function(data){
+				closeContactForm();
+				alert("success");
+				refreshContactTable();
+			},
+			"error": function(XMLHttpRequest, textStatus, errorThrown) {
+				var err = JSON.parse(XMLHttpRequest.responseText);
+				alert(err.Message);
+			}
+		});
+	}
+
+	//delete Client record
+	function deleteClient(row){
+		if (confirm("Please confirm you wish to delete")) {
+			$.ajax({
+				"url": "/deleteclient",
+				"data": {"clientid":row._id},
+				"type": "POST",
+				"success": function(data){
+					refreshClientTable();
+					alert("Success");
+				},
+				"error": function(XMLHttpRequest, textStatus, errorThrown) {
+					var err = JSON.parse(XMLHttpRequest.responseText);
+					alert(err.Message);
+				}
+			});
+		}
+	}
+
+	//delete Contact record
+	function deleteContact(row){
+		if (confirm("Please confirm you wish to delete")) {
+			$.ajax({
+				"url": "/deletecontact",
+				"data": {"contactid":row._id},
+				"type": "POST",
+				"success": function(data){
+					refreshContactTable();
+					alert("Success");
+				},
+				"error": function(XMLHttpRequest, textStatus, errorThrown) {
+					var err = JSON.parse(XMLHttpRequest.responseText);
+					alert(err.Message);
+				}
+			});
+		}
+	}
+
+
+	$(document).ready(function(){
+		//load table data
+		loadClientsTable();
+		loadContactsTable();
+		loadProjectsTable();
+		
+        // New client record event
+        $('#createClient').on('click', function (e) {
+			closeClientForm();
+			$("#clientFormContainer").css("display","block");
+			$("#cln_name").focus();
+			e.preventDefault();
+        });
+		
+        // Edit client record event
+        $('#clientsTable').on('click', 'td.editor-edit', function (e) {
+			closeClientForm();
+			//prep form fileds with data
+			var row  = clientsTable.row(this).data()
+			$("#cln_clientid").val(row._id);
+			$("#cln_name").val(row.clientname);
+			$("#cln_industry").val(row.industry);
+			$("#cln_description").val(row.description);
+			$("#cln_phone").val(row.phone);
+			$("#cln_email").val(row.email);
+			$("#cln_addr1").val(row.addr1);
+			$("#cln_addr2").val(row.addr2);
+			$("#cln_addr3").val(row.addr3);
+			$("#cln_country").val(row.country);
+			$("#cln_notes").val(row.notes);
+			
+			$("#clientFormContainer").css("display","block");
+			$("#clientname").focus();
+            e.preventDefault();
+        });
+		
+        // client Delete button
+        $('#clientsTable').on('click', 'td.editor-delete', function (e) {
+            var row  = clientsTable.row(this).data()
+			deleteClient(row);
+			e.preventDefault();
+        });
+		
+		// client Cancel button
+		$('#cln_cancelbtn').on('click', function (e) {
+			closeClientForm();
+			e.preventDefault();
+		});
+		
+		// client Submit button
+		$('#clientForm').on('submit', function (e) {
+			submitClients();
+			e.preventDefault();
+		});
+
+
+        // New contact record
+        $('#createContact').on('click', function (e) {
+            closeContactForm();
+			
+			var clientname_div = $('<select/>',{
+				id : "con_clientname",
+				required : true
+			});
+			$("#con_clientname").replaceWith(clientname_div);
+			$.ajax({
+				"url": "/getclients",
+				"type": "POST",
+				"data": {},
+				"success":function(response){
+					$("#con_clientname").empty();
+					$("#con_clientname").append("<option>Select Client</option>");
+					var len = response.length;
+					for( var i = 0; i<len; i++){
+						var id = response[i]['_id'];
+						var name = response[i]['clientname'];
+						$("#con_clientname").append("<option value='"+id+"'>"+name+"</option>");
+					}
+				}
+			});
+			
+			$("#contactFormContainer").css("display","block");
+			$("#con_clientname").focus();
+			e.preventDefault();
+        });
+        
+		// Edit contact record
+        $('#contactsTable').on('click', 'td.editor-edit', function (e) {
+			closeContactForm();
+			var row  = contactsTable.row(this).data()
+			
+			$("#con_contactid").val(row._id);
+			$("#con_fname").val(row.firstname);
+			$("#con_lname").val(row.lastname);
+			$("#con_title").val(row.title);
+			$("#con_role").val(row.role);
+			$("#con_email").val(row.email);
+			$("#con_phone").val(row.phone);
+			$("#con_notes").val(row.notes);
+			$("#con_clientid").val(row.clientid);
+			
+			var clientname_div = $('<div/>',{
+				text : row.client.clientname,
+				id : $("#con_clientname").attr('id')
+			});
+			$("#con_clientname").replaceWith(clientname_div);
+
+			
+			$("#contactFormContainer").css("display","block");
+			$("#contactname").focus();
+            e.preventDefault();
+        });
+        
+		// Delete a Contact
+        $('#contactsTable').on('click', 'td.editor-delete', function (e) {
+            var row  = contactsTable.row(this).data()
+			deleteContact(row);
+			e.preventDefault();
+        });
+		// Cancel button
+		$('#con_cancelbtn').on('click', function (e) {
+			closeContactForm();
+			e.preventDefault();
+		});
+		
+		// Submit button
+		$('#contactForm').on('submit', function (e) {
+			submitContacts();
+			e.preventDefault();
+		});
+	});
+</script>
+
 </body>
 </html>
