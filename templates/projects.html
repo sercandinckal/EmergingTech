@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Project: Group 3</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+	<style>
+		<!--Table CSS-->
+
+		html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+		 *{
+			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+		}
+		body{
+			font-family: Helvetica;
+			-webkit-font-smoothing: antialiased;
+			background: gray;
+		}
+		h2{
+			text-align: center;
+			font-size: 18px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: black;
+			padding: 30px 0;
+		}
+
+		/* Table Styles */
+
+		.table-wrapper{
+			margin: 10px 70px 70px;
+			box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+		}
+
+		.fl-table {
+			border-radius: 5px;
+			font-size: 12px;
+			font-weight: normal;
+			border: none;
+			border-collapse: collapse;
+			width: 100%;
+			max-width: 100%;
+			white-space: nowrap;
+			background-color: white;
+		}
+
+		.fl-table td, .fl-table th {
+			text-align: center;
+			padding: 8px;
+		}
+
+		.fl-table td {
+			border-right: 1px solid #f8f8f8;
+			font-size: 12px;
+		}
+
+		.fl-table thead th {
+			color: #ffffff;
+			background: #4FC3A1;
+		}
+
+
+		.fl-table thead th:nth-child(odd) {
+			color: #ffffff;
+			background: #324960;
+		}
+
+		.fl-table tr:nth-child(even) {
+			background: #F8F8F8;
+		}
+
+		/* Responsive */
+
+		@media (max-width: 767px) {
+			.fl-table {
+				display: block;
+				width: 100%;
+			}
+			.table-wrapper:before{
+				content: "Scroll horizontally >";
+				display: block;
+				text-align: right;
+				font-size: 11px;
+				color: white;
+				padding: 0 0 10px;
+			}
+			.fl-table thead, .fl-table tbody, .fl-table thead th {
+				display: block;
+			}
+			.fl-table thead th:last-child{
+				border-bottom: none;
+			}
+			.fl-table thead {
+				float: left;
+			}
+			.fl-table tbody {
+				width: auto;
+				position: relative;
+				overflow-x: auto;
+			}
+			.fl-table td, .fl-table th {
+				padding: 20px .625em .625em .625em;
+				height: 60px;
+				vertical-align: middle;
+				box-sizing: border-box;
+				overflow-x: hidden;
+				overflow-y: auto;
+				width: 120px;
+				font-size: 13px;
+				text-overflow: ellipsis;
+			}
+			.fl-table thead th {
+				text-align: left;
+				border-bottom: 1px solid #f7f7f9;
+			}
+			.fl-table tbody tr {
+				display: table-cell;
+			}
+			.fl-table tbody tr:nth-child(odd) {
+				background: none;
+			}
+			.fl-table tr:nth-child(even) {
+				background: transparent;
+			}
+			.fl-table tr td:nth-child(odd) {
+				background: #F8F8F8;
+				border-right: 1px solid #E6E4E4;
+			}
+			.fl-table tr td:nth-child(even) {
+				border-right: 1px solid #E6E4E4;
+			}
+			.fl-table tbody td {
+				display: block;
+				text-align: center;
+			}
+		}
+
+        /* The popup form - hidden by default */
+		.form-popup {
+		  display: none;
+		  position: center;
+		  bottom: 0;
+		  right: 20px;
+		  border: 7px solid #f1f1f1;
+		  z-index: 9;
+		}
+
+
+		/* Add styles to the form container */
+		.form-container {
+		  max-width: 600px;
+		  padding: 10px;
+		  background-color: white;
+		}
+
+		.form_element{
+		  display: inline-block;
+		  margin:1px;
+		  margin-right:10px;
+		  width:230px;
+		}
+
+		/* Full-width input fields */
+		.form-container input[type=text], 
+		.form-container input[type=email],
+		.form-container input[type=tel],
+		.form-container input[type=date],
+		.form-container input[type=number],
+		.form-container input[type=password],
+		.form-container select, 
+		.form-container textarea{
+		  width: 100%;
+		  padding: 15px;
+		  margin: 8px 0 22px 0;
+		  border: none;
+		  background: #f1f1f1;
+		}
+
+		/* When the inputs get focus, do something */
+		.form-container input[type=text]:focus, 
+		.form-container input[type=email]:focus, 
+		.form-container input[type=tel]:focus, 
+		.form-container input[type=date]:focus, 
+		.form-container input[type=number]:focus, 
+		.form-container input[type=password]:focus, 
+		.form-container select:focus, 
+		.form-container textarea:focus {
+		  background-color: #ddd;
+		  outline: none;
+		}
+
+		/* Set a style for the submit/login button */
+		.form-container .btn {
+		  background-color: #04AA6D;
+		  color: white;
+		  padding: 15px 20px;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  margin-bottom:10px;
+		  opacity: 0.8;
+		}
+
+		/* Add a red background color to the cancel button */
+		.form-container .cancel {
+		  background-color: red;
+		}
+
+		/* Add some hover effects to buttons */
+		.form-container .btn:hover, .open-button:hover {
+		  opacity: 1;
+		}
+	</style>
+</head>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+  <a href="main.html">  <img alt="logo" src='{{url_for("static",filename="images/logo.png")}}' width=150" height="50">  </a>
+
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-col s4">
+      <img src='{{url_for("static",filename="images/manager/b1.png")}}' class="w3-circle w3-margin-right" style="width:46px">
+    </div>
+    <div class="w3-col s8 w3-bar">
+      <span>Welcome, <strong>{{UserName}}</strong></span><br>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <a href="/dashboard" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Dashboard</a>
+    <a href="/projects" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-eye fa-fw"></i>  Projects</a>
+    <a href="/tasks" class="w3-bar-item w3-button w3-padding"><i class="fa fa-tasks fa-fw"></i>  Tasks</a>
+    <a href="/clients" class="w3-bar-item w3-button w3-padding"><i class="fa fa-address-card fa-fw"></i> Clients </a>
+    <a href="/employees" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Employees</a><br><br>
+	<a href="/logout" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw"></i>  Logout</a><br><br>
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+
+
+  <h2>Projects</h2>
+  <div class="table-wrapper">
+      <a id="createProject">+ Create new project</a>
+      <!-- Active projects table-->
+      <table class="fl-table" id="projectsTable">
+          <thead>
+          <tr>
+              <th>id</th>
+              <th>Project Name</th>
+              <th>Project Descrption</th>
+              <th>Status</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Client</th>
+              <th>Project Manager</th>
+              <th></th>
+          </tr>
+          </thead>
+      </table>
+      <!-- Project form-->
+		<div class="form-popup" id="projectFormContainer">
+		  <form class="form-container" id="projectForm">
+			<input type="hidden" id="prj_id" disabled>
+			<input type="hidden" id="clientid" disabled>
+			<input type="hidden" id="projectmanagerid" disabled>
+			<fieldset>
+			  <div class="form_element">
+				<label for="projectname"><b>Project Name</b></label>
+				<input type="text" placeholder="Project name" id="prj_name" required>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="prj_desc"><b>Description</b></label><br>
+				<input type="text" placeholder="Description" id="prj_desc">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="prj_startdate"><b>Start date</b></label>
+				<input type="date" id="prj_startdate" placeholder="yyyy-MM-dd" min="2021-01-01" max="2030-12-31">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="prj_enddate"><b>End date</b></label>
+				<input type="date" id="prj_enddate" placeholder="yyyy-MM-dd" min="2021-01-01" max="2030-12-31">
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="prj_status"><b>Status</b></label>
+				<select id="prj_status" >
+					<option value="New" selected="selected">New</option>
+					<option value="Active">Active</option>
+					<option value="Complete">Complete</option>
+					<option value="On Hold">On Hold</option>
+					<option value="Cancelled">Cancelled</option>
+				</select>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="prj_cmplete"><b>Percentage Complete</b></label>
+				<input type="number" placeholder="0%" name="percentagecomplete" id="prj_cmplete" min="0" max="100" required>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="prj_clientname"><b>Client</b></label>
+				<select id="prj_clientname" required></select>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="prj_managername"><b>Project Manager Name</b></label>
+				<select id="prj_managername" required></select>
+			  </div>
+						
+			  <div class="form_element">
+				<label for="notes"><b>Notes</b></label>
+				<textarea id="prj_notes" rows="4" cols="30" value=""></textarea>
+			  </div>
+			</fieldset>
+			
+			<fieldset>
+			  <div class="form_element">
+				<button type="submit" class="btn">Submit</button>
+			  </div>
+			  
+			  <div class="form_element">
+				<button type="button" class="btn cancel" id='prj_cancelbtn'>Close</button>
+			  </div>
+			</fieldset>
+		  </form>
+		</div>
+  </div>
+
+
+  <h2>Project Team</h2>
+  <div class="table-wrapper">
+      <a id="createPrjTeam">+ Add New Memeber</a>
+      <!-- Project Team table-->
+      <table class="fl-table" id="prjTeamTable">
+          <thead>
+          <tr>
+              <th>id</th>
+              <th>Project Name</th>
+              <th>Team Member Name</th>
+              <th>Role</th>
+              <th></th>
+              <th></th>
+          </tr>
+          </thead>
+      </table>
+      <!-- Project team form-->
+		<div class="form-popup" id="prjTeamFormContainer">
+		  <form class="form-container" id="prjTeamForm">
+			<input type="hidden" id="pjt_projectid" disabled>
+			<input type="hidden" id="pjt_idx" disabled>
+			<input type="hidden" id="prjteamid" disabled>
+			<fieldset>
+			  <div class="form_element">
+				<label for="pjt_projname"><b>Project Name</b></label>
+				<div id='pjt_projname'></div>
+			  </div>
+			  <div class="form_element">
+				<label>&nbsp;</label>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="pjt_name"><b>Member Name</b></label>
+				<select id="pjt_name" required></select>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="pjt_role"><b>Role</b></label>
+				<input type="text" placeholder="role" id="pjt_role">
+			  </div>
+			</fieldset>
+			<fieldset>
+			  <div class="form_element">
+				<button type="submit" class="btn">Submit</button>
+			  </div>
+			  
+			  <div class="form_element">
+				<button type="button" class="btn cancel" id='pjt_cancelbtn'>Close</button>
+			  </div>
+			</fieldset>
+		  </form>
+		</div>
+  </div>
+
+
+
+  <h2>Project Milestones</h2>
+  <div class="table-wrapper">
+      <a id="createMilestone">+ Create new Milestone</a>
+      <!-- Project Milestone table-->
+      <table class="fl-table" id="milestonesTable">
+          <thead>
+          <tr>
+              <th>Id</th>
+              <th>Project Name</th>
+              <th>Milestone Name</th>
+              <th>Status</th>
+              <th>Due Date</th>
+              <th></th>
+              <th></th>
+          </tr>
+          </thead>
+      </table>
+      <!-- Project Milestone form-->
+		<div class="form-popup" id="milestoneFormContainer">
+		  <form class="form-container" id="milestoneForm">
+			<input type="hidden" id="mls_projectid" disabled>
+			<input type="hidden" id="mls_idx" disabled>
+			<input type="hidden" id="milestoneid" disabled>
+			<fieldset>
+			  <div class="form_element">
+				<label for="mls_projname"><b>Project Name</b></label>
+				<div id='mls_projname'></div>
+			  </div>
+			  <div class="form_element">
+				<label>&nbsp;</label>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="mls_name"><b>Milestone Name</b></label>
+				<input type="text" placeholder="Milestone name" id="mls_name" required>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="mls_status"><b>Status</b></label>
+				<select id="mls_status" >
+					<option value="New" selected="selected">New</option>
+					<option value="Active">Active</option>
+					<option value="Complete">Complete</option>
+					<option value="On Hold">On Hold</option>
+					<option value="Future">Future</option>
+					<option value="Cancelled">Cancelled</option>
+				</select>
+			  </div>
+			  
+			  <div class="form_element">
+				<label for="mls_duedate"><b>Due Date</b></label>
+				<input type="date" id="mls_duedate" placeholder="yyyy-MM-dd" min="2021-01-01" max="2030-12-31">
+			  </div>
+			</fieldset>
+			<fieldset>
+			  <div class="form_element">
+				<button type="submit" class="btn">Submit</button>
+			  </div>
+			  
+			  <div class="form_element">
+				<button type="button" class="btn cancel" id='mls_cancelbtn'>Close</button>
+			  </div>
+			</fieldset>
+		  </form>
+		</div>
+  </div>
+
+
+
+
+  <h2>Project Tasks</h2>
+  <div class="table-wrapper">
+      <!-- Project tasks table-->
+      <table class="fl-table" id="tasksTable">
+          <thead>
+          <tr>
+              <th>id</th>
+              <th>Project Name</th>
+              <th>Milestone Name</th>
+              <th>Task Name</th>
+              <th>Task Description</th>
+              <th>Due Date</th>
+              <th>% Complete</th>
+              <th>Assigned To</th>
+              <th>Contact</th>
+          </tr>
+          </thead>
+      </table>
+  </div>
+
+
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-16 w3-light-grey">
+	<p>&copy; GROUP 3 - Emerging Technologies project </p>
+  </footer>
+
+  <!-- End page content -->
+</div>
+
+<script>
+"use strict";
+var projectsTable;
+var milestonesTable;
+var prjTeamTable;
+var tasksTable;
+
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  } else {
+    mySidebar.style.display = 'block';
+    overlayBg.style.display = "block";
+  }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+  mySidebar.style.display = "none";
+  overlayBg.style.display = "none";
+}
+
+//Loads projects table
+function loadProjectsTable(){
+	projectsTable=$('#projectsTable').DataTable({
+		ajax:  {
+			"url": "/getprojects",
+			"type": "POST",
+			"data": {},
+			"dataSrc":""
+		},
+		columns: [
+			{ data: "_id",
+				"visible": false,
+				"searchable": false },
+			{ data: "_id",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+			}},
+			{ data: "description" },
+			{ data: "Status" },
+			{ data: "startdate" },
+			{ data: "enddate" },
+			{ data: "clientid",
+				"render": function ( data, type, row, meta ) {
+					//alert(JSON.stringify(row));
+					return '<a href="/clients?clientid='+data+'">'+row['clientname']+'</a>';
+			}},
+			{ data: "projectmanagerid",
+				"render": function ( data, type, row, meta ) {
+					if(data == null){
+						return 'None';
+					}else{
+						return '<a href="/employees?userid='+data+'">'+row['projectmanager']['firstname']+' '+row['projectmanager']['lastname']+'</a>';
+					}
+			}},
+			{ data: null,
+				className: "dt-center editor-edit",
+				defaultContent: '<i class="fa fa-pencil"/>',
+				orderable: false
+			}
+		]
+	});
+}
+
+//Loads Milestone table
+function loadMilestonesTable(){
+
+	milestonesTable=$('#milestonesTable').DataTable({
+		ajax:  {
+			"url": "/getmilestones",
+			"type": "POST",
+			"data": {},
+			"dataSrc":""
+		},
+		columns: [
+			{ data: "_id",
+				"visible": false,
+				"searchable": false },
+			{ data: "projectid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+			}},
+			{ data: "milestonename" },
+			{ data: "status" },
+			{ data: "duedate" },
+			{ data: null,
+				className: "dt-center editor-edit",
+				defaultContent: '<i class="fa fa-pencil"/>',
+				orderable: false
+			},
+			{ data: null,
+				className: "dt-center editor-delete",
+				defaultContent: '<i class="fa fa-trash"/>',
+				orderable: false
+			}
+		]
+	});
+}
+
+//Loads prjteam table
+function loadPrjTeamTable(){
+	prjTeamTable=$('#prjTeamTable').DataTable({
+		ajax:  {
+			"url": "/getprjteam",
+			"type": "POST",
+			"data": {},
+			"dataSrc":""
+		},
+		columns: [
+			{ data: "_id",
+				"visible": false,
+				"searchable": false },
+			{ data: "projectid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+			}},
+			{ data: "prjteamid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/employees?userid='+data+'">'+row['firstname']+' '+row['lastname']+'</a>';
+			}},
+			{ data: "role" },
+			{ data: null,
+				className: "dt-center editor-edit",
+				defaultContent: '<i class="fa fa-pencil"/>',
+				orderable: false
+			},
+			{ data: null,
+				className: "dt-center editor-delete",
+				defaultContent: '<i class="fa fa-trash"/>',
+				orderable: false
+			}
+		]
+	});
+}
+
+//Loads tasks table
+function loadTasksTable(){
+	tasksTable=$('#tasksTable').DataTable({
+		ajax:  {
+			"url": "/gettasks",
+			"type": "POST",
+			"data": {},
+			"dataSrc":""
+		},
+		columns: [
+			{ data: "_id",
+				"visible": false,
+				"searchable": false },
+			{ data: "projectid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?projectid='+data+'">'+row['projectname']+'</a>';
+			}},
+			{ data: "milestoneid",
+				"render": function ( data, type, row, meta ) {
+					return '<a href="/projects?milestoneid='+data+'">'+row['milestonename']+'</a>';
+			}},
+			{ data: "taskname" },
+			{ data: "description" },
+			{ data: "duedate" },
+			{ data: "percentagecomplete" },
+			{ data: "ownerid",
+				"render": function ( data, type, row, meta ) {
+					if(row['ownername'] == null){
+						return 'None';
+					}else{
+						return '<a href="/employees?userid='+data+'">'+row['ownername']+'</a>';
+					}
+				}
+			},
+			{ data: "contactid",
+				"render": function ( data, type, row, meta ) {
+					if(data == null){
+						return 'None';
+					}else{
+						return '<a href="/clients?contactid='+data+'">'+row['contact']['firstname']+' '+ row['contact']['lastname']+'</a>';
+					}
+				}
+			}
+		]
+	});
+}
+
+//refresh Project data
+function refreshProjectTable(){
+	$('#projectsTable').DataTable().ajax.reload();
+}
+
+//refresh milestones data
+function refreshMilestoneTable(){
+	$('#milestonesTable').DataTable().ajax.reload();
+}
+
+//refresh prjTeam data
+function refreshPrjTeamTable(){
+	$('#prjTeamTable').DataTable().ajax.reload();
+}
+
+//refresh client data
+function refreshTaskTable(){
+	$('#tasksTable').DataTable().ajax.reload();
+}
+
+//refresh project dropdown
+function refreshProjectDropdown(){
+	//Load projectmanager dropdown
+	$.ajax({
+		"url": "/getusers",
+		"type": "POST",
+		"data": {"accesstype":"Proj Manager"},
+		"success":function(response){
+			$("#prj_managername").empty();
+			$("#prj_managername").append("<option>Project Manager</option>");
+			var len = response.length;
+			for( var i = 0; i<len; i++){
+				var id = response[i]['_id'];
+				var name = response[i]['firstname']+' '+response[i]['lastname'];
+				$("#prj_managername").append("<option value='"+id+"'>"+name+"</option>");
+				$("#prj_managername").val($("#projectmanagerid").val());
+			}
+		}
+	});
+	//Load Contacts dropdown
+	$.ajax({
+		"url": "/getclients",
+		"type": "POST",
+		"data": {},
+		"success":function(response){
+			$("#prj_clientname").empty();
+			$("#prj_clientname").append("<option>Select Client</option>");
+			var len = response.length;
+			for( var i = 0; i<len; i++){
+				var id = response[i]['_id'];
+				var name = response[i]['clientname'];
+				$("#prj_clientname").append("<option value='"+id+"'>"+name+"</option>");
+				$("#prj_clientname").val($("#clientid").val());
+			}
+		}
+	});
+}
+
+//refresh project team dropdown
+function refreshPrjTeamDropdown(){
+	//Load project members dropdown
+	$.ajax({
+		"url": "/getusers",
+		"type": "POST",
+		"data": {},
+		"success":function(response){
+			$("#pjt_name").empty();
+			$("#pjt_name").append("<option>Select Member</option>");
+			var len = response.length;
+			for( var i = 0; i<len; i++){
+				var id = response[i]['_id'];
+				var name = response[i]['firstname']+' '+response[i]['lastname'];
+				$("#pjt_name").append("<option value='"+id+"'>"+name+"</option>");
+				$("#pjt_name").val($("#prjteamid").val());
+			}
+		}
+	});
+}
+
+//Close Project form
+function closeProjectForm(){
+	$("#projectForm").trigger("reset");
+	$("#prj_id").removeAttr("value");
+	$("#clientid").removeAttr("value");
+	$("#prj_managername").empty();
+	$("#prj_clientname").empty();
+	$("#projectmanagerid").removeAttr("value");
+	$("#projectFormContainer").css("display","None");
+	$(window).scrollTop($("#createProject").offset().top);
+}
+
+//Close PrjTeam form
+function closePrjTeamForm(){
+	$("#prjTeamForm").trigger("reset");
+	var projectname_div = $('<div/>',{
+		text : "",
+		id : $("#pjt_projname").attr('id')
+	});
+	$("#pjt_projname").replaceWith(projectname_div);
+	$("#pjt_name").empty();
+	$("#pjt_projectid").removeAttr("value");
+	$("#pjt_idx").removeAttr("value");
+	$("#prjteamid").removeAttr("value");
+	$("#prjTeamFormContainer").css("display","None");
+	$(window).scrollTop($("#createPrjTeam").offset().top);
+}		
+
+//Close Milestone form
+function closeMilestoneForm(){
+	$("#milestoneForm").trigger("reset");
+	var projectname_div = $('<div/>',{
+		text : "",
+		id : $("#mls_projname").attr('id')
+	});
+	$("#mls_projname").replaceWith(projectname_div);
+	$("#mls_projectid").removeAttr("value");
+	$("#mls_idx").removeAttr("value");
+	$("#milestoneid").removeAttr("value");
+	$("#milestoneFormContainer").css("display","None");
+	$(window).scrollTop($("#createMilestone").offset().top);
+}
+
+//Submit Project Form
+function submitProject(){
+	var projectid = $("#prj_id").val();
+	var projectname = $("#prj_name").val();
+	var description = $("#prj_desc").val();
+	var notes = $("#prj_notes").val();
+	var Status = $("#prj_status").val();
+	var percentcomplete = $("#prj_cmplete").val();
+	var startdate = $("#prj_startdate").val();
+	var enddate = $("#prj_enddate").val();
+	var clientid = $("#prj_clientname").val();
+	var projectmanagerid = $("#prj_managername").val();
+	var clientname = $("#prj_clientname option:selected").text();
+	var projectmanagername = $("#prj_managername option:selected").text();
+
+	var url;
+	if (projectid != ""){
+		url = "/updateproject";
+	}else{
+		url = "/createproject";
+	}
+	
+	var data = {
+		"projectid": projectid,
+		"projectname": projectname,
+		"description": description,
+		"notes": notes,
+		"Status": Status,
+		"percentcomplete": percentcomplete,
+		"startdate": startdate,
+		"enddate": enddate,
+		"clientid": clientid,
+		"projectmanagerid": projectmanagerid,
+		"clientname": clientname,
+		"projectmanagername": projectmanagername
+	};
+	$.ajax({
+		"url": url,
+		"data": data,
+		"type": "POST",
+		"success": function(data){
+			closeProjectForm();
+			alert("success");
+			refreshProjectTable();
+		},
+		"error": function(XMLHttpRequest, textStatus, errorThrown) {
+			var err = JSON.parse(XMLHttpRequest.responseText);
+			alert(err.Message);
+		}
+	});
+}
+
+//Submit PrjTeam Form
+function submitPrjTeam(){
+	var projectid;
+	var projectname;
+	var prjteamid;
+	var membername;
+	var prjteamidx = $("#pjt_idx").val();
+	var role = $("#pjt_role").val();
+
+	var url;
+	if (prjteamidx != ""){
+		url = "/updateprjteam";
+		projectid = $("#pjt_projectid").val();
+		projectname = $("#pjt_projname").text();
+		prjteamid = $("#pjt_name").val();
+		membername = $("#pjt_name option:selected").text();
+	}else{
+		url = "/createprjteam";
+		projectid = $("#pjt_projname").val();
+		projectname = $("#pjt_projname option:selected").text();
+		prjteamid = $("#pjt_name").val();
+		membername = $("#pjt_name option:selected").text();
+	}
+	var data = {
+		"projectid": projectid,
+		"prjteamidx": prjteamidx,
+		"prjteamid": prjteamid,
+		"role": role,
+		"projectname": projectname,
+		"membername": membername
+	};
+	$.ajax({
+		"url": url,
+		"data": data,
+		"type": "POST",
+		"success": function(data){
+			closePrjTeamForm();
+			alert("success");
+			refreshPrjTeamTable();
+		},
+		"error": function(XMLHttpRequest, textStatus, errorThrown) {
+			var err = JSON.parse(XMLHttpRequest.responseText);
+			alert(err.Message);
+		}
+	});
+}
+
+//Submit Milestone Form
+function submitMilestone(){
+	var projectid;
+	var Projectname;
+	var milestoneidx = $("#mls_idx").val();
+	var milestoneid = $("#milestoneid").val();
+	var milestonename = $("#mls_name").val();
+	var duedate = $("#mls_duedate").val();
+	var status = $("#mls_status").val();
+
+	var url;
+	if (milestoneidx != ""){
+		url = "/updatemilestone";
+		projectid = $("#mls_projectid").val();
+		projectname = $("#mls_projname").text();
+	}else{
+		url = "/createmilestone";
+		projectid = $("#mls_projname").val();
+		projectname = $("#mls_projname option:selected").text();
+	}
+	
+	var data = {
+		"projectid": projectid,
+		"milestoneidx": milestoneidx,
+		"milestoneid": milestoneid,
+		"milestonename": milestonename,
+		"duedate": duedate,
+		"status": status,
+		"Projectname": Projectname
+	};
+	$.ajax({
+		"url": url,
+		"data": data,
+		"type": "POST",
+		"success": function(data){
+			closeMilestoneForm();
+			alert("success");
+			refreshMilestoneTable();
+		},
+		"error": function(XMLHttpRequest, textStatus, errorThrown) {
+			var err = JSON.parse(XMLHttpRequest.responseText);
+			alert(err.Message);
+		}
+	});
+}
+
+//delete Project record
+function deleteProject(row){
+	if (confirm("Please confirm you wish to delete")) {
+		$.ajax({
+			"url": "/deleteproject",
+			"data": {"projectid":row._id},
+			"type": "POST",
+			"success": function(data){
+				refreshProjectTable();
+				alert("Success");
+			},
+			"error": function(XMLHttpRequest, textStatus, errorThrown) {
+				var err = JSON.parse(XMLHttpRequest.responseText);
+				alert(err.Message);
+			}
+		});
+	}
+}
+
+//delete Milestone record
+function deleteMilestone(row){
+	if (confirm("Please confirm you wish to delete")) {
+		$.ajax({
+			"url": "/deletemilestone",
+			"data": {"projectid":row.projectid, "milestoneid":row.milestoneid},
+			"type": "POST",
+			"success": function(data){
+				refreshMilestoneTable();
+				alert("Success");
+			},
+			"error": function(XMLHttpRequest, textStatus, errorThrown) {
+				var err = JSON.parse(XMLHttpRequest.responseText);
+				alert(err.Message);
+			}
+		});
+	}
+}
+
+//delete PrjTeam record
+function deletePrjTeam(row){
+	if (confirm("Please confirm you wish to delete")) {
+		$.ajax({
+			"url": "/deleteprjteam",
+			"data": {"projectid":row.projectid, "prjteamid":row.prjteamid},
+			"type": "POST",
+			"success": function(data){
+				refreshPrjTeamTable();
+				alert("Success");
+			},
+			"error": function(XMLHttpRequest, textStatus, errorThrown) {
+				var err = JSON.parse(XMLHttpRequest.responseText);
+				alert(err.Message);
+			}
+		});
+	}
+}
+
+
+$(document).ready(function(){
+	//load table data
+	loadProjectsTable();
+	loadMilestonesTable();
+	loadPrjTeamTable();
+	loadTasksTable();
+
+	// New project record
+	$('#createProject').on('click', function (e) {
+		closeProjectForm();
+		refreshProjectDropdown();
+		$("#projectFormContainer").css("display","block");
+		$("#prj_name").focus();
+		e.preventDefault();
+	});
+	
+	// Edit project record
+	$('#projectsTable').on('click', 'td.editor-edit', function (e) {
+		closeProjectForm();
+		var row  = projectsTable.row(this).data()
+		$("#prj_id").val(row._id);
+		$("#prj_name").val(row.projectname);
+		$("#prj_desc").val(row.description);
+		$("#prj_notes").val(row.notes);
+		$("#prj_status").val(row.Status);
+		$("#prj_cmplete").val(row.percentcomplete);
+		$("#prj_startdate").val(new Date(row.startdate).toISOString().substr(0, 10));
+		$("#prj_enddate").val(new Date(row.enddate).toISOString().substr(0, 10));
+		$("#clientid").val(row.clientid);
+		$("#projectmanagerid ").val(row.projectmanagerid);
+		$("#prj_clientname").val(row.clientname);
+		$("#prj_managername").val(row.projectmanager.firstname+' '+row.projectmanager.lastname);
+		refreshProjectDropdown();
+
+		$("#projectFormContainer").css("display","block");
+		$("#projectname").focus();
+		e.preventDefault();
+	});
+
+	// project Delete button
+	$('#projectsTable').on('click', 'td.editor-delete', function (e) {
+		var row  = projectsTable.row(this).data()
+		deleteProject(row);
+		e.preventDefault();
+	});
+	
+	// project Cancel button
+	$('#prj_cancelbtn').on('click', function (e) {
+		closeProjectForm();
+		e.preventDefault();
+	});
+	
+	// project Submit button
+	$('#projectForm').on('submit', function (e) {
+		submitProject();
+		e.preventDefault();
+	});
+
+
+    // New milestone record
+	$('#createMilestone').on('click', function (e) {
+		closeMilestoneForm();
+		var projectname_div = $('<select/>',{
+			id : "mls_projname",
+			required : true
+		});
+		$("#mls_projname").replaceWith(projectname_div);
+		$.ajax({
+			"url": "/getprojects",
+			"type": "POST",
+			"data": {},
+			"success":function(response){
+				$("#mls_projname").empty();
+				$("#mls_projname").append("<option>Select Project</option>");
+				var len = response.length;
+				for( var i = 0; i<len; i++){
+					var id = response[i]['_id'];
+					var name = response[i]['projectname'];
+					$("#mls_projname").append("<option value='"+id+"'>"+name+"</option>");
+				}
+			}
+		});
+		
+		$("#milestoneFormContainer").css("display","block");
+		$("#mls_projname").focus();
+		e.preventDefault();
+	});
+	
+	// Edit milestone record
+	$('#milestonesTable').on('click', 'td.editor-edit', function (e) {
+		closeMilestoneForm();
+		var row  = milestonesTable.row(this).data()
+		$("#mls_projectid").val(row.projectid);
+		$("#mls_idx").val(row.milestoneidx);
+		$("#milestoneid").val(row.milestoneid);
+		$("#mls_name").val(row.milestonename);
+		$("#mls_duedate").val(new Date(row.duedate).toISOString().substr(0, 10));
+		$("#mls_status").val(row.status);
+		var projectname_div = $('<div/>',{
+			text : row.projectname,
+			id : "mls_projname"
+		});
+		$("#mls_projname").replaceWith(projectname_div);
+
+		$("#milestoneFormContainer").css("display","block");
+		$("#milestoneForm").focus();
+		e.preventDefault();
+	});
+	
+	// milestone Delete record
+	$('#milestonesTable').on('click', 'td.editor-delete', function (e) {
+		var row  = milestonesTable.row(this).data()
+		deleteMilestone(row);
+		e.preventDefault();
+	});
+	
+	// milestone Cancel button
+	$('#mls_cancelbtn').on('click', function (e) {
+		closeMilestoneForm();
+		e.preventDefault();
+	});
+	
+	// milestone Submit button
+	$('#milestoneForm').on('submit', function (e) {
+		submitMilestone();
+		e.preventDefault();
+	});
+
+
+    // New prjTeam record
+	$('#createPrjTeam').on('click', function (e) {
+		closePrjTeamForm();
+		var projectname_div = $('<select/>',{
+			id : "pjt_projname",
+			required : true,
+			onchange : "refreshPrjTeamDropdown()"
+		});
+		$("#pjt_projname").replaceWith(projectname_div);
+		$.ajax({
+			"url": "/getprojects",
+			"type": "POST",
+			"data": {},
+			"success":function(response){
+				$("#pjt_projname").empty();
+				$("#pjt_projname").append("<option>Select Project</option>");
+				var len = response.length;
+				for( var i = 0; i<len; i++){
+					var id = response[i]['_id'];
+					var name = response[i]['projectname'];
+					$("#pjt_projname").append("<option value='"+id+"'>"+name+"</option>");
+				}
+			}
+		});
+		refreshPrjTeamDropdown();
+		$("#prjTeamFormContainer").css("display","block");
+		$("#pjt_name").focus();
+		e.preventDefault();
+	});
+	
+	// Edit prjTeam record
+	$('#prjTeamTable').on('click', 'td.editor-edit', function (e) {
+		closePrjTeamForm();
+		var row  = prjTeamTable.row(this).data()
+		$("#pjt_projectid").val(row.projectid);
+		$("#pjt_idx").val(row.prjteamidx);
+		$("#prjteamid").val(row.prjteamid);
+		$("#pjt_role").val(row.role);
+		$("#pjt_name").val(row.firstname +' '+ row.lastname);
+		refreshPrjTeamDropdown()
+		var projectname_div = $('<div/>',{
+			text : row.projectname,
+			id : "pjt_projname"
+		});
+		$("#pjt_projname").replaceWith(projectname_div);
+
+		$("#prjTeamFormContainer").css("display","block");
+		$("#prjTeamForm").focus();
+		e.preventDefault();
+	});
+	
+	// prjTeam delete record
+	$('#prjTeamTable').on('click', 'td.editor-delete', function (e) {
+		var row  = prjTeamTable.row(this).data()
+		deletePrjTeam(row);
+		e.preventDefault();
+	});
+	
+	// prjTeam Cancel button
+	$('#pjt_cancelbtn').on('click', function (e) {
+		closePrjTeamForm();
+		e.preventDefault();
+	});
+	
+	// prjTeam Submit button
+	$('#prjTeamForm').on('submit', function (e) {
+		submitPrjTeam();
+		e.preventDefault();
+	});
+});
+</script>
+
+</body>
+</html>
